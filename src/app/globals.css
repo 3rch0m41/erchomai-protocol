@@ -11,20 +11,23 @@ body {
   font-family: sans-serif;
 }
 
+/* Colore base per tutti i link */
 .nav-link-custom {
   color: #ffffff !important;
   text-decoration: none !important;
   transition: all 0.3s ease;
 }
 
+/* Colore al passaggio del mouse */
 .nav-link-custom:hover {
   color: #00f2fe !important;
+  opacity: 0.9;
 }
 
-/* Questa classe verrà gestita con un selettore semplice */
-.nav-link-custom.active {
+/* CLASSE ACTIVE: La carichiamo in modo che il browser non faccia storie */
+.nav-link-custom.active-page {
   color: #00f2fe !important;
-  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.7);
 }
 
 /* Evita il viola dei link visitati */
