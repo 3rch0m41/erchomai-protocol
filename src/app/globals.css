@@ -1,6 +1,4 @@
-@tailwindcss base;
-@tailwindcss components;
-@tailwindcss utilities;
+@tailwind utilities;
 
 :root {
   --background: #000212;
@@ -11,4 +9,25 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: sans-serif;
+}
+
+.nav-link-custom {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+.nav-link-custom:hover {
+  color: #00f2fe !important;
+}
+
+/* Questa classe verrà gestita con un selettore semplice */
+.nav-link-custom.active {
+  color: #00f2fe !important;
+  text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+}
+
+/* Evita il viola dei link visitati */
+a:visited {
+  color: inherit !important;
 }
