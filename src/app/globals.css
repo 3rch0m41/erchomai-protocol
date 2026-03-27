@@ -1,6 +1,6 @@
-
-@tailwind components;
-@tailwind utilities;
+@tailwindcss base;
+@tailwindcss components;
+@tailwindcss utilities;
 
 :root {
   --background: #000212;
