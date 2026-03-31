@@ -16,7 +16,6 @@ export default function HomePage() {
     <div className="min-h-screen bg-[#000212] text-white flex flex-col font-mono selection:bg-cyan-500/30 overflow-x-hidden relative">
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
       
-      <Navbar />
 
       <main className="flex-grow flex flex-col items-center relative z-10 px-6 pb-40">
         
@@ -61,13 +60,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
-      <footer className="py-10 border-t border-white/5 flex flex-col items-center opacity-20 text-[9px] tracking-[0.5em] uppercase mt-auto">
-        <div className="flex items-center gap-3 text-cyan-500 font-bold mb-2">
-          <Lock className="w-3 h-3" /><span>ENCRYPTED_SESSION</span>
-        </div>
-        <span>© 2026 Erchomai_Repository</span>
-      </footer>
     </div>
   );
 }

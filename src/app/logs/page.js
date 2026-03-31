@@ -36,8 +36,6 @@ export default function LogsPage() {
 
   return (
     <div className={styles.pageContainer}>
-      <Navbar />
-
       <main className={styles.mainContent}>
         <div className={styles.heroGrid}>
           
@@ -66,7 +64,6 @@ export default function LogsPage() {
               </div>
             )}
           </div>
-
         </div>
       </main>
     </div>

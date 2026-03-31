@@ -1,0 +1,108 @@
+/* STATO INIZIALE: Nascosto per evitare conflitti React */
+.bannerContainer {
+  display: none; 
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  max-width: 420px;
+  animation: slideIn 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.isVisible {
+  display: block !important;
+}
+
+.glitchBox {
+  background-color: rgba(0, 5, 15, 0.98);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-left: 3px solid #00f2fe;
+  box-shadow: 0 0 20px rgba(0, 242, 254, 0.15), inset 0 0 10px rgba(0, 242, 254, 0.05);
+  padding: 1.25rem;
+}
+
+.content {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.textArea {
+  flex: 1;
+}
+
+.title {
+  display: block;
+  font-weight: 900;
+  font-size: 9pt;
+  letter-spacing: 0.2em;
+  color: #fff;
+  text-transform: uppercase;
+  font-style: italic;
+  margin-bottom: 0.4rem;
+  text-shadow: 0 0 8px rgba(0, 242, 254, 0.6);
+}
+
+.desc {
+  font-size: 7pt;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- BOTTONI COERENTI CON IL SITO --- */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-left: 0.5rem;
+}
+
+.btnBase {
+  font-family: inherit;
+  font-size: 7.5pt;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 4px;
+}
+
+/* Bottone Accetta (Stile FilterActive) */
+.btnAccept {
+  background-color: rgba(66, 203, 209, 0.2);
+  border: 1px solid #42cbd1;
+  color: white;
+  box-shadow: 0 0 12px rgba(66, 203, 209, 0.3);
+}
+
+.btnAccept:hover {
+  background-color: rgba(66, 203, 209, 0.4);
+  box-shadow: 0 0 20px rgba(66, 203, 209, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Bottone Rifiuta (Stile FilterButton Standard) */
+.btnDecline {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(66, 203, 209, 0.2);
+  color: rgba(66, 203, 209, 0.6);
+}
+
+.btnDecline:hover {
+  border-color: rgba(255, 62, 62, 0.5);
+  color: #ff3e3e;
+  background: rgba(255, 62, 62, 0.05);
+}
+
+@keyframes slideIn {
+  from { transform: translateX(30px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
