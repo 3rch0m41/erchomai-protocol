@@ -33,9 +33,9 @@ export default function CookieLogic() {
           </div>
           
           <div className={styles.textArea}>
-            <span className={styles.title}>PROTOCOL_CONSENT</span>
+            <span className={styles.title}>COOKIE_PROTOCOL</span>
             <p className={styles.desc}>
-              Neural packets required for system sync. Accept transmission?
+              We use essential cookies to make our site work. We&apos;d also like to use non-essential cookies to analyze traffic and show personalized ads. Accept Cookie Policy?
             </p>
           </div>
 

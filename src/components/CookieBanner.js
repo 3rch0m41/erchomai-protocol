@@ -13,7 +13,7 @@ export default function CookieBanner({ onAccept, onDecline }) {
           <div className={styles.iconArea}><ShieldAlert size={20} /></div>
           <div className={styles.textArea}>
             <span className={styles.title}>COOKIE_PROTOCOL</span>
-            <p className={styles.desc}>Accept neural data-packets?</p>
+            <p className={styles.desc}>Accept Cookie Policy?</p>
           </div>
           <div className={styles.actions}>
             <button onClick={onDecline} className={styles.btnDecline}>DECLINE</button>

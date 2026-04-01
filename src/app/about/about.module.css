@@ -1,0 +1,155 @@
+.pageContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #00050a;
+  color: white;
+  overflow: hidden; /* Uccide lo scroll del browser */
+  position: relative;
+  min-height: 0;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 242, 254, 0.05), transparent);
+  pointer-events: none;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  min-height: 0;
+}
+
+.dossierWrapper {
+  width: 100%;
+  max-width: 1100px;
+  height: 80%; /* Occupa gran parte dello schermo senza toccare Nav/Footer */
+  display: flex;
+  background: rgba(0, 10, 20, 0.8);
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 280px;
+  border-right: 1px solid rgba(0, 242, 254, 0.1);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  background: rgba(0, 242, 254, 0.02);
+}
+
+.profileFrame {
+  width: 100%;
+  aspect-ratio: 1;
+  background: black;
+  border: 1px solid #42cbd1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.scannerLine {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 2px;
+  background: #00f2fe;
+  box-shadow: 0 0 10px #00f2fe;
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7pt;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.label { color: rgba(255, 255, 255, 0.4); }
+
+/* AREA CONTENUTO SCORREVOLE */
+.contentArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0; /* Permette lo scroll interno */
+}
+
+.contentScroll {
+  flex: 1;
+  overflow-y: auto; /* Solo questa parte scorre se il testo è lungo */
+  padding: 3rem;
+  scrollbar-width: thin;
+  scrollbar-color: #42cbd1 transparent;
+}
+
+.contentScroll::-webkit-scrollbar { width: 4px; }
+.contentScroll::-webkit-scrollbar-thumb { background: #42cbd1; }
+
+.glitchTitle {
+  font-size: 2.5rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-shadow: 2px 0 #ff003c, -2px 0 #00f2fe;
+  margin-bottom: 0.5rem;
+}
+
+.breadcrumb {
+  font-size: 8pt;
+  color: #42cbd1;
+  margin-bottom: 3rem;
+  opacity: 0.7;
+}
+
+.subTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 1rem;
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.text {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+}
+
+.highlight { color: #00f2fe; font-weight: bold; }
+
+.techList {
+  list-style: none;
+  padding: 0;
+  font-size: 8pt;
+  color: #42cbd1;
+}
+
+.contentFooter {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px dashed rgba(255, 255, 255, 0.1);
+  font-size: 7pt;
+  color: rgba(255, 255, 255, 0.3);
+  display: flex;
+  justify-content: space-between;
+}

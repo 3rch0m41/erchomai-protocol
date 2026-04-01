@@ -1,6 +1,6 @@
 /* --- CONFIGURAZIONE PAGINA (ANTI-SCROLL) --- */
 .pageContainer {
-  min-height: 100vh;
+  height: calc(100vh - 64px - 40px);
   background-color: #00010a;
   color: white;
   display: flex;
@@ -25,19 +25,21 @@
 .mainContent {
   position: relative;
   z-index: 10;
+  flex:1;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   /* Ridotto drasticamente il padding superiore */
-  padding: 2rem 1rem 1rem; 
+  padding: 1rem 1rem 0; 
+  min-height: 0;
 }
 
 /* --- IL GUSCIO PRINCIPALE (HERO GRID) --- */
 .heroGrid {
   width: 100%;
   max-width: 1400px;
-  max-height: 90vh; /* Altezza massima per restare nello schermo */
+  margin-bottom: 1rem;
   background-color: rgba(0, 5, 15, 0.85);
   border: 1px solid rgba(0, 242, 254, 0.3);
   border-radius: 12px;
@@ -48,9 +50,11 @@
   display: grid;
   grid-template-columns: repeat(24, 1fr);
   /* Padding interno compatto */
+  grid-template-rows: auto auto 1fr; /* Testata, filtri, contenuto */
   padding: 1.5rem 2rem; 
+  overflow-y: auto;
   align-items: start;
-  overflow-y: auto; /* Scroll interno solo se i log superano l'altezza */
+  min-height: 0;/* Scroll interno solo se i log superano l'altezza */
 }
 
 /* Custom Scrollbar per il guscio (stile tech) */
@@ -166,6 +170,7 @@
   gap: 1rem;
   padding: 1.5rem 0 1rem;
   z-index: 20;
+  align-content: start;
 }
 
 .logCard {

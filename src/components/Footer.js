@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { Terminal, Cpu, ShieldCheck } from 'lucide-react';
 import styles from './Footer.module.css';
 
@@ -36,9 +37,15 @@ export default function Footer() {
         {/* Sezione Destra: Link Tecnici */}
         <div className={styles.sectionRight}>
           <nav className={styles.nav}>
-            <a href="#" className={styles.link}>CORE_SYSTEM</a>
-            <a href="#" className={styles.link}>PRIVACY_VOID</a>
-            <a href="#" className={styles.link}>TERMINAL_LOGS</a>
+            <Link href="/" className={styles.link}>
+              HOME_CORE            
+            </Link>
+            <Link href="/logs" className={styles.link}>
+              TERMINAL_LOGS            
+            </Link>
+            <Link href="/privacy" className={styles.link}>
+              PRIVACY_POLICY            
+            </Link>
           </nav>
         </div>
 
