@@ -1,30 +1,36 @@
 import React from 'react';
 import Link from 'next/link';
-import { Terminal } from 'lucide-react';
 
 export default function BlogCard({ title, excerpt, slug }) {
   return (
-    <div className="w-[300px] aspect-[4/5] rounded-[32px] border-2 border-[#00f2fe] bg-black/40 backdrop-blur-md p-8 flex flex-col items-center text-center transition-all duration-500 hover:shadow-[0_0_40px_rgba(0,242,254,0.3)] hover:-translate-y-2 group relative">
-      
-      <div className="w-12 h-12 rounded-xl bg-[#00f2fe]/10 border border-[#00f2fe]/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-        <Terminal className="w-6 h-6 text-[#00f2fe]" />
-      </div>
+    <Link href={`/logs/${slug}`} className="group block h-full">
+      {/* Altezza ridotta a 120px e padding minimo */}
+      <div className="relative h-full min-h-[120px] flex flex-col justify-between p-4 rounded-[20px] border border-white/10 bg-white/[0.02] backdrop-blur-sm transition-all duration-500 hover:border-[#00f2fe]/40 hover:bg-[#00f2fe]/5 overflow-hidden shadow-sm">
+        
+        {/* Header minimale */}
+        <div className="flex items-center justify-between opacity-40 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-1.5">
+            <div className="w-1 h-1 rounded-full bg-[#00f2fe]" />
+            <span className="text-[6px] font-mono tracking-[0.2em] uppercase text-white">Log_Data</span>
+          </div>
+          <span className="text-[6px] font-mono text-white/40 uppercase tracking-tighter italic font-bold">SEC_04</span>
+        </div>
 
-      <div className="flex-grow flex flex-col justify-center items-center space-y-4">
-        <h3 className="text-lg md:text-xl font-bold uppercase tracking-widest leading-tight text-white">
-          {title}
-        </h3>
-        <p className="text-[10px] text-white/40 leading-relaxed uppercase tracking-tight">
-          {excerpt}
-        </p>
-      </div>
+        {/* Content compattato */}
+        <div className="flex-grow flex flex-col justify-center">
+          <h3 className="text-[11px] md:text-xs font-bold text-white leading-tight group-hover:text-[#00f2fe] transition-colors uppercase tracking-tighter line-clamp-1">
+            {title}
+          </h3>
+          <p className="text-[9px] text-white/20 leading-tight line-clamp-1 mt-1 font-light italic">
+            {excerpt}
+          </p>
+        </div>
 
-      <Link 
-        href={`/logs/${slug}`} 
-        className="mt-6 text-[9px] font-black uppercase tracking-[0.4em] text-[#00f2fe] border-b border-[#00f2fe]/30 pb-1 hover:brightness-125 transition-all"
-      >
-        Open_File [+]
-      </Link>
-    </div>
+        {/* Decorazione inferiore sottilissima */}
+        <div className="h-[1px] w-full bg-white/5 rounded-full overflow-hidden mt-2">
+          <div className="h-full w-0 bg-[#00f2fe] group-hover:w-full transition-all duration-700 ease-out" />
+        </div>
+      </div>
+    </Link>
   );
 }
