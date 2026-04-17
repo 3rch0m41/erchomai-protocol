@@ -1,21 +1,19 @@
-"use client";
-
 import React from 'react';
 import { Zap, ChevronRight } from 'lucide-react';
 import BlogCard from '@/components/BlogCard';
 import Link from 'next/link';
+import { client } from '@/sanity/lib/client'; // Assicurati che l'alias @ punti a /src
 
-// Se vuoi aggiornare il titolo della scheda del browser in Next.js App Router:
-// Nota: I metadata vanno solitamente nel layout o in un file server-side, 
-// ma se sei in un file client, il titolo viene gestito dal layout genitore.
+// Query per recuperare gli ultimi 4 log pubblicati
+const GET_LATEST_LOGS = `*[_type == "log"] | order(publishedAt desc)[0...4] {
+  title,
+  excerpt,
+  "slug": slug.current
+}`;
 
-export default function HomePage() {
-  const latestLogs = [
-    { title: "Zero-Day Protocol Analysis", excerpt: "Analisi minacce APT.", slug: "zero-day" },
-    { title: "Quantum Encryption Standards", excerpt: "Standard post-quantum.", slug: "encryption" },
-    { title: "Neural Link v4 Integrity", excerpt: "Integrità biometrica.", slug: "neural-link" },
-    { title: "Cloud Firewall AI Filter", excerpt: "Filtraggio euristico AI.", slug: "cloud-v9" }
-  ];
+export default async function HomePage() {
+  // Recupero dati da Sanity
+  const latestLogs = await client.fetch(GET_LATEST_LOGS);
 
   return (
     <div className="flex flex-col items-center w-full relative">
@@ -29,7 +27,6 @@ export default function HomePage() {
         <div className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%] min-h-[460px] mt-16 rounded-[40px] border border-white/10 bg-white/[0.01] backdrop-blur-md relative flex flex-col items-center justify-center p-12 shadow-[0_0_80px_rgba(0,0,0,0.8)]">
           <div className="absolute top-8 left-10 flex items-center gap-2 text-[#00f2fe]/30 text-[8px] tracking-[0.5em] font-bold uppercase">
             <Zap className="w-3.5 h-3.5 animate-pulse" />
-            {/* Aggiornata Label Core */}
             <span>ERCHOMAI_PROTOCOL_v4.1</span>
           </div>
           
@@ -65,20 +62,32 @@ export default function HomePage() {
         {/* BLOG CARDS ZONE */}
         <section className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%]">
           <div className="flex flex-row gap-6 lg:gap-8 items-stretch">
-            {latestLogs.map((log, index) => (
-              <div key={index} className="flex-1 min-w-0">
-                <BlogCard {...log} />
-              </div>
-            ))}
+            {latestLogs.length > 0 ? (
+              latestLogs.map((log, index) => (
+                <div key={index} className="flex-1 min-w-0">
+                  <BlogCard 
+                    title={log.title} 
+                    excerpt={log.excerpt} 
+                    slug={log.slug} 
+                  />
+                </div>
+              ))
+            ) : (
+              // Fallback se non ci sono post in Sanity
+              <p className="text-[#00f2fe]/30 text-[10px] uppercase tracking-widest w-full text-center py-10">
+                No logs found in terminal...
+              </p>
+            )}
           </div>
         </section>
       </main>
 
-      <style jsx global>{`
+      {/* Stile CSS Global gestito per Server Components */}
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(200%); } }
         ::-webkit-scrollbar { display: none; }
-        * { -ms-overflow-style: none; scrollbar-width: none; }
-      `}</style>
+        body { -ms-overflow-style: none; scrollbar-width: none; background-color: black; }
+      `}} />
     </div>
   );
 }

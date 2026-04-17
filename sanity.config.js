@@ -1,5 +1,8 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
+import { schema } from './src/sanity/schemaTypes' // Importa lo schema definito in src/sanity/schemaTypes/index.js
+import { visionTool } from '@sanity/vision'
+import { codeInput } from '@sanity/code-input'
 
 export default defineConfig({
   name: 'default',
@@ -9,9 +12,9 @@ export default defineConfig({
 
   basePath: '/studio', // Questo deve corrispondere al nome della cartella in app/
 
-  plugins: [structureTool()],
-  
+  plugins: [ structureTool(), visionTool(), codeInput()],
+
   schema: {
-    types: [], // Lascia vuoto per ora, deve caricarsi l'interfaccia grigia
+    types: schema.types, // Lascia vuoto per ora, deve caricarsi l'interfaccia grigia
   },
 })

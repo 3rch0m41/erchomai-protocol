@@ -1,3 +1,5 @@
+import {defineField, defineType} from 'sanity'
+
 export default {
   name: 'log',
   title: 'System Logs',
@@ -48,8 +50,8 @@ export default {
       type: 'array',
       of: [
         { type: 'block' }, // Testo normale, titoli, liste
-        { 
-          type: 'code', 
+        {
+          type: 'code',
           title: 'Code Snippet',
           options: {
             withFilename: true, // Per dare un nome al file decriptato
