@@ -1,3 +1,5 @@
+import log from "./log";
+
 export const schema = {
-  types: [],
+  types: [log],
 }
