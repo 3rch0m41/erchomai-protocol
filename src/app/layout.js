@@ -25,11 +25,19 @@ export default function RootLayout({ children }) {
   // Altrimenti, restituiamo il sito normale con Navbar e Footer
   return (
     <html lang="it">
+      <head>
+        <title>ERCHOMAI PROTOCOL</title>
+        <meta name="description" content="ERCHOMAI PROTOCOL - Un viaggio attraverso la sicurezza informatica e l'innovazione tecnologica. Esplora le nostre analisi, ricerche e approfondimenti su minacce emergenti, tecnologie di difesa e tendenze del settore." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </head>
       <body>
         <Navbar />
         <main>{children}</main>
         <Footer />
       </body>
     </html>
+
+    
   )
 }

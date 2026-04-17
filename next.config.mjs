@@ -28,6 +28,15 @@ const nextConfig = {
           {
             key: 'Referrer-Policy',
             value: 'strict-origin-when-cross-origin',
+          },
+          {
+            key: 'Permissions-Policy',
+            value:
+              'camera=(), ' +          // Disabilita la fotocamera
+              'microphone=(), ' +      // Disabilita il microfono
+              'geolocation=(), ' +     // Disabilita la geolocalizzazione
+              'browsing-topics=(), ' + // Disabilita il tracking dei Google Topics
+              'interest-cohort=()'     // Disabilita FLoC
           }
         ],
       },
