@@ -1,10 +1,13 @@
+/* src/app/logs/[slug]/log.module.css */
+
 .container {
-  min-height: 100vh;
+  width: 100%;
   background-color: black;
   color: #00f2fe;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   position: relative;
-  overflow: hidden;
+  /* Eliminiamo flex e min-height per non creare conflitti con layout.js */
+  display: block; 
 }
 
 .gridOverlay {
@@ -18,89 +21,176 @@
   z-index: 1;
 }
 
-.scanlines {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
-  background-size: 100% 4px;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.2;
-}
-
+/* HEADER - Layout a tre colonne */
 .header {
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
-  padding-bottom: 20px;
-  margin-bottom: 80px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  padding: 40px 20px 20px 20px;
   text-transform: uppercase;
-}
-
-@media (min-width: 768px) {
-  .header {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-end;
-  }
-}
-
-.returnLink {
-  font-size: 18px; /* Più grande e autoritario */
-  letter-spacing: 0.4em;
-  color: #00f2fe;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.returnLink:hover {
-  opacity: 1;
-  color: white;
-  text-shadow: 0 0 15px #00f2fe;
-  transform: translateX(-5px);
-}
-
-.flickerTitle {
-  animation: flicker 4s linear infinite;
-  text-shadow: 0 0 25px rgba(0, 242, 254, 0.5);
-  margin: 0;
-  line-height: 1.1;
-}
-
-@keyframes flicker {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; transform: scaleY(1); }
-  20% { opacity: 0.8; transform: scaleY(1.02); }
-  55% { opacity: 0.9; transform: scaleY(0.98); }
-}
-
-.codeBlockContainer {
-  margin: 3rem 0;
   position: relative;
-}
-
-.codeLabel {
-  position: absolute;
-  top: -12px;
-  left: 24px;
-  background-color: black;
-  padding: 0 10px;
-  font-size: 10px;
-  color: #00f2fe;
-  border: 1px solid rgba(0, 242, 254, 0.3);
-  letter-spacing: 0.2em;
   z-index: 10;
 }
 
-.codePre {
-  background-color: rgba(0, 242, 254, 0.03);
-  border: 1px solid rgba(0, 242, 254, 0.15);
-  padding: 2rem;
-  overflow-x: auto;
-  transition: border 0.3s ease;
+.returnLink {
+  font-size: 22px; 
+  font-weight: 800;
+  color: #00f2fe;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  justify-self: start;
 }
 
-.codePre:hover {
-  border-color: rgba(0, 242, 254, 0.4);
+.returnLink:hover {
+  color: white;
+  text-shadow: 0 0 10px #00f2fe;
+}
+
+.flickerTitle {
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 900;
+  margin: 0;
+  text-align: center;
+  animation: flicker 4s linear infinite;
+}
+
+/* LINEA SEPARATRICE DOTTED */
+.mainDivider {
+  height: 0;
+  width: 100%;
+  border-top: 2px dotted rgba(0, 242, 254, 0.4);
+  margin: 0;
+  padding: 0;
+}
+
+/* WRAPPER AL 50% - Il cuore del problema dello spazio */
+.contentWrapper {
+  max-width: 50%;
+  margin: 0 auto;
+  padding: 20px 20px 0 20px; /* Padding bottom a zero */
+  position: relative;
+  z-index: 10;
+}
+
+.detailsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px; /* Ridotto per compattezza */
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(0, 242, 254, 0.7);
+  text-transform: uppercase;
+  border-bottom: 1px dotted rgba(0, 242, 254, 0.2);
+  padding: 15px 0;
+}
+
+/* RESET AGGRESSIVO PER IL CONTENUTO */
+.articleContainer {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* Rimuove i margini automatici dell'ultimo paragrafo generato da PortableText/Prose */
+.articleContainer :last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+/* STILE CODICE MIGLIORATO */
+.codeBlockContainer {
+  margin: 3rem 0;
+  position: relative;
+  background: #0a0a0a; /* Sfondo leggermente più scuro del nero puro */
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+}
+
+.codeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 242, 254, 0.08);
+  padding: 10px 18px;
+  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.codeLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #00f2fe;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.codeControls {
+  display: flex;
+  gap: 6px;
+}
+
+/* Puntini decorativi tipo finestra terminale */
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0, 242, 254, 0.3);
+}
+
+.codeBody {
+  display: flex;
+  overflow-x: auto;
+  line-height: 1.6;
+}
+
+/* Colonna numeri di riga */
+.lineNumbers {
+  padding: 1.5rem 0.8rem;
+  border-right: 1px solid rgba(0, 242, 254, 0.1);
+  color: rgba(0, 242, 254, 0.2);
+  text-align: right;
+  font-size: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  min-width: 45px;
+  user-select: none;
+}
+
+.codePre {
+  padding: 1.5rem;
+  margin: 0;
+  flex-grow: 1;
+  background: transparent;
+}
+
+.codeText {
+  font-size: 13.5px;
+  color: rgba(0, 242, 254, 0.9);
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  white-space: pre;
+}
+
+/* Effetto bagliore su hover */
+.codeBlockContainer:hover {
+  border-color: rgba(0, 242, 254, 0.5);
+  transition: border-color 0.3s ease;
+}
+
+/* RESPONSIVE ADAPTATION */
+@media (max-width: 1200px) {
+  .contentWrapper { max-width: 85%; }
+}
+
+@media (max-width: 768px) {
+  .contentWrapper { max-width: 95%; }
+  .header {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 15px;
+  }
+  .returnLink { justify-self: center; }
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
+  20% { opacity: 0.8; }
+  55% { opacity: 0.9; }
 }
