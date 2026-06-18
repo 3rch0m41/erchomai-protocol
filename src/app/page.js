@@ -2,18 +2,49 @@ import React from 'react';
 import { Zap, ChevronRight } from 'lucide-react';
 import BlogCard from '@/components/BlogCard';
 import Link from 'next/link';
-import { client } from '@/sanity/lib/client'; // Assicurati che l'alias @ punti a /src
+import { client } from '@/sanity/lib/client';
 
-// Query per recuperare gli ultimi 4 log pubblicati
-const GET_LATEST_LOGS = `*[_type == "log"] | order(publishedAt desc)[0...4] {
+// QUERY AGGIORNATA: Recupera gli ultimi 4 log interrogando i tre nuovi schemi
+const GET_LATEST_LOGS = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] ] | order(publishedAt desc)[0...4] {
+  _id,
+  _type,
   title,
   excerpt,
-  "slug": slug.current
+  "slug": slug.current,
+  status
 }`;
+
+// Funzione di mappatura interna per associare lo schema alla categoria corretta
+const getLogType = (type) => {
+  if (type === "forgeLog") return "FORGE";
+  if (type === "breachLog") return "BREACH";
+  if (type === "malwareLog") return "SANDBOX";
+  return "SYSTEM";
+};
+
+// Prefissi testuali per i titoli
+const PREFIX_TEXT = {
+  FORGE: "FORGE_CRAFT // ",
+  BREACH: "BREACH_REPORT // ",
+  SANDBOX: "MALWARE_SNDBX // ",
+};
 
 export default async function HomePage() {
   // Recupero dati da Sanity
-  const latestLogs = await client.fetch(GET_LATEST_LOGS);
+  const rawLogs = await client.fetch(GET_LATEST_LOGS);
+
+  // Normalizziamo i log prima di mandarli in rendering
+  const latestLogs = rawLogs.map(log => {
+    const calculatedType = getLogType(log._type);
+    const prefix = PREFIX_TEXT[calculatedType] || "SYSTEM // ";
+    
+    return {
+      ...log,
+      type: calculatedType,
+      // Passiamo il titolo già completo di prefisso formattato in JS
+      displayTitle: `${prefix}${log.title}`
+    };
+  });
 
   return (
     <div className="flex flex-col items-center w-full relative">
@@ -63,17 +94,17 @@ export default async function HomePage() {
         <section className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%]">
           <div className="flex flex-row gap-6 lg:gap-8 items-stretch">
             {latestLogs.length > 0 ? (
-              latestLogs.map((log, index) => (
-                <div key={index} className="flex-1 min-w-0">
+              latestLogs.map((log) => (
+                <div key={log._id} className="flex-1 min-w-0">
                   <BlogCard 
-                    title={log.title} 
+                    title={log.displayTitle} // Usa il titolo formattato con il prefisso pulito
                     excerpt={log.excerpt} 
-                    slug={log.slug} 
+                    slug={log.slug}
+                    type={log.type} // Passiamo l'identificativo nel caso servisse a BlogCard
                   />
                 </div>
               ))
             ) : (
-              // Fallback se non ci sono post in Sanity
               <p className="text-[#00f2fe]/30 text-[10px] uppercase tracking-widest w-full text-center py-10">
                 No logs found in terminal...
               </p>

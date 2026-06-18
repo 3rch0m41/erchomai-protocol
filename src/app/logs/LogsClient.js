@@ -11,21 +11,32 @@ export default function LogsClient({ initialLogs = [] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
 
-  // Logica conteggi basata sui dati reali di Sanity
+  // Mappa lo _type di Sanity sulla categoria del filtro
+  const getLogType = (type) => {
+    if (type === "forgeLog") return "FORGE";
+    if (type === "breachLog") return "BREACH";
+    if (type === "malwareLog") return "SANDBOX";
+    return "SYSTEM";
+  };
+
+  // Conteggi basati sul tipo mappato
   const categoryCounts = useMemo(() => {
     const counts = { ALL: initialLogs.length };
-    ["SECURITY", "DATA", "UPLINK", "SYSTEM"].forEach(cat => {
-      counts[cat] = initialLogs.filter(l => l.type === cat).length;
+    ["FORGE", "BREACH", "SANDBOX"].forEach(cat => {
+      counts[cat] = initialLogs.filter(l => getLogType(l._type) === cat).length;
     });
     return counts;
   }, [initialLogs]);
 
-  // Logica filtraggio: cerchiamo nel titolo e filtriamo per tipo
+  // Filtraggio dinamico
   const filteredLogs = useMemo(() => {
     return initialLogs.filter(log => {
+      const logType = getLogType(log._type);
       const title = log.title || "";
+      
       const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesFilter = activeFilter === "ALL" || log.type === activeFilter;
+      const matchesFilter = activeFilter === "ALL" || logType === activeFilter;
+      
       return matchesSearch && matchesFilter;
     });
   }, [searchQuery, activeFilter, initialLogs]);
@@ -43,7 +54,6 @@ export default function LogsClient({ initialLogs = [] }) {
             </div>
           </div>
 
-          {/* Componenti modulari con i dati di stato */}
           <SearchArea query={searchQuery} setQuery={setSearchQuery} />
 
           <FilterBar 
@@ -59,9 +69,7 @@ export default function LogsClient({ initialLogs = [] }) {
                   key={log._id} 
                   item={{
                     ...log,
-                    // Mapping per compatibilità con il tuo LogCard.js
-                    id: log._id,
-                    label: log.title 
+                    type: getLogType(log._type) // Passiamo il tipo normalizzato (FORGE, BREACH, SANDBOX)
                   }} 
                 />
               ))

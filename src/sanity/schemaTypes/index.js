@@ -1,5 +1,7 @@
-import log from "./log";
+import breachLog from "./breachLog";
+import malwareLog from "./malwareLog";
+import forgeLog from "./forgeLog";
 
 export const schema = {
-  types: [log]
+  types: [breachLog, malwareLog, forgeLog]
 }

@@ -2,19 +2,21 @@ import { ChevronRight, Shield, Database, Activity, Cpu } from 'lucide-react';
 import Link from 'next/link';
 import styles from '@/app/logs/LogsPage.module.css';
 
-// Mapping delle icone basato sul campo 'type' di Sanity
 const TYPE_ICONS = {
-  SECURITY: Shield,
-  DATA: Database,
-  UPLINK: Activity,
-  SYSTEM: Cpu,
+  FORGE: Cpu,
+  BREACH: Shield,
+  SANDBOX: Database,
+};
+
+const PREFIX_TEXT = {
+  FORGE: "FORGE_CRAFT // ",
+  BREACH: "BREACH_REPORT // ",
+  SANDBOX: "MALWARE_SNDBX // ",
 };
 
 export default function LogCard({ item }) {
-  // Seleziona l'icona in base al tipo, o usa Activity come fallback
   const Icon = TYPE_ICONS[item.type] || Activity;
-  
-  // Sanity usa _id, lo accorciamo per l'estetica del design
+  const prefix = PREFIX_TEXT[item.type] || "SYSTEM // ";
   const shortId = item._id ? item._id.substring(0, 3).toUpperCase() : "000";
 
   return (
@@ -30,17 +32,18 @@ export default function LogCard({ item }) {
         </div>
         
         <h3 className={styles.cardTitle}>
-          {item.title}_{shortId}
+          {`${prefix}${item.title}_${shortId}`}
           <ChevronRight size={12} className="inline-block ml-1 opacity-50" />
         </h3>
         
         <p className="text-[5pt] tracking-widest opacity-40 uppercase">
-          TYPE: {item.type} | SEC: {item.sector || "01"}
+          {`TYPE: ${item.type} | SEC: ${item.sector || "CORE_01"}`}
         </p>
         
         <div className={styles.cardFooter}>
-          <span>REF: {item.ref || "CORE_SYS"}</span>
-          <span>ID: {shortId}</span>
+          {/* Usiamo stringhe pulite per evitare conflitti con i caratteri speciali */}
+          <span>{`REF: ${item.ref || "CORE_SYS"}`}</span>
+          <span>{`ID: ${shortId}`}</span>
         </div>
       </div>
     </Link>
