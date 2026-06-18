@@ -21,7 +21,7 @@ export default function PrivacyPage() {
           
           <div className={styles.titleGroup}>
             <Shield size={32} className={styles.icon} />
-            <h1 className={styles.title}>PRIVACY_POLICY_PROTOCOL</h1>
+            <h1 className={styles.title}>PRIVACY_POLICY di ERCHOMAI-PROTOCOL</h1>
           </div>
           <p className={styles.subtitle}>
             Regolamento UE 2016/679 // General Data Protection Regulation (GDPR)
@@ -34,65 +34,130 @@ export default function PrivacyPage() {
         <article className={styles.legalContent}>
           
           <section className={styles.section}>
+            <h2>In vigore dal [DATA PUBBLICAZIONE SITO]</h2>
+            <p>La presente Privacy Policy descrive le modalità di gestione di questo sito web in riferimento al trattamento dei dati personali degli utenti.</p>
+            <br></br>
             <h2>01 // TITOLARE DEL TRATTAMENTO</h2>
             <p>
-              Il Titolare del Trattamento è l&apos;amministratore dell&apos;infrastruttura di rete 
-              <span className="text-white"> erchomai-protocol</span>. Le richieste di informazioni, 
-              modifica, cancellazione o revoca del consenso possono essere inoltrate direttamente 
-              tramite il modulo di contatto presente nella sezione 
-              <Link href="/contact" className="text-[#00f2fe] underline ml-1">
-                ESTABLISH_CONNECTION
-              </Link>.
+              Il Titolare del Trattamento è: Giulio Malini. 
+              <br />
+              Email: [EMAIL_ADDRESS]
             </p>
           </section>
-
           <section className={styles.section}>
-            <h2>02 // TIPOLOGIA DI DATI RACCOLTI (PAYLOAD)</h2>
+            <h2>02 // TIPOLOGIA DI DATI TRATTATI</h2>
             <p>
               L&apos;infrastruttura raccoglie esclusivamente i dati minimi necessari per stabilire un flusso di comunicazione diretto su richiesta spontanea dell&apos;utente. I pacchetti informativi includono:
             </p>
             <ul>
-              <li>
+              <li><strong>Dati forniti volontariamente dall&apos;utente</strong></li>
+              <ul>
+                <li>
                 <ChevronRight size={10} className="inline mr-1" /> 
-                SENDER_IDENTITY: Nome o Alias fornito dall&apos;operatore.
-              </li>
-              <li>
+                  Nome o Alias fornito dall&apos;utente.
+                </li>
+                <li>
+                  <ChevronRight size={10} className="inline mr-1" /> 
+                  Indirizzo di posta elettronica per la risposta.
+                </li>
+                <li>
+                  <ChevronRight size={10} className="inline mr-1" /> 
+                  Il testo del messaggio digitato nel modulo.
+                </li>
+              </ul>
+              <li><strong>Dati di navigazione:</strong></li>
+              <ul>
+                <li>
                 <ChevronRight size={10} className="inline mr-1" /> 
-                RETURN_SIGNAL_ADDRESS: Indirizzo di posta elettronica per la risposta.
-              </li>
-              <li>
-                <ChevronRight size={10} className="inline mr-1" /> 
-                DATA_PACKAGE_CONTENT: Il testo del messaggio digitato nel modulo.
-              </li>
+                  Indirizzo IP;
+                </li>
+                <li>
+                  <ChevronRight size={10} className="inline mr-1" /> 
+                  Browser;
+                </li>
+                <li>
+                  <ChevronRight size={10} className="inline mr-1" /> 
+                  Altri log tecnici;
+                </li>
+              </ul>
+          </ul>
+          </section>
+
+          <section className={styles.section}>
+            <h2>03 // FINALITÀ DEL TRATTAMENTO</h2>
+            <p>
+              I flussi dati estratti dal modulo contatti vengono elaborati per l&apos;unica finalità di dare riscontro alle richieste di interazione o di supporto professionale.
+            </p>
+          </section>
+          <section className={styles.section}>
+            <h2>04 // BASE GIURIDICA DEL TRATTAMENTO</h2>
+            <p>
+              <strong>Base giuridica:</strong> Il trattamento si fonda sul consenso esplicito dell&apos;interessato (Art. 6, par. 1, lett. b del GDPR - misure precontrattuali), manifestato in modo vincolante tramite la selezione manuale della checkbox di validazione prima della trasmissione del segnale.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2>05 // MODALITÀ DI TRATTAMENTO</h2>
+            <p>
+              Tutti i dati in transito sono protetti tramite connessioni cifrate (SSL/TLS). Non è presente alcun database di persistenza a lungo termine sul server per i messaggi ricevuti: i dati vengono inviati via email tramite protocollo HTTPS.
+            </p>
+            <p>
+              I dati personali saranno conservati per il tempo strettamente necessario (non oltre 12 mesi), dopodiché si procederà alla rimozione dei record.
+            </p>
+          </section>
+
+          <section className={styles.section}>
+            <h2>06 // DESTINATARI</h2>
+            <p>
+              Tutti i dati personali non vengono venduti, ceduti o diffusi a terzi. I dati raccolti tramite il modulo contatti sono accessibili esclusivamente al Titolare del Trattamento e ai suoi collaboratori strettamente necessari per la gestione delle richieste.
+              <br />
+              Possono essere trattati da:
+            </p>
+            <ul>
+              <li>Titolare del Trattamento</li>
+              <li>Provider del servizio mail (es. Google, Microsoft, Libero, ProtonMail)</li>
+              <li>Provider del servizio hosting (es. AWS, Google Cloud, Microsoft Azure)</li>
             </ul>
-          </section>
-
-          <section className={styles.section}>
-            <h2>03 // FINALITÀ E BASE GIURIDICA DEL TRATTAMENTO</h2>
             <p>
-              I flussi dati estratti dal modulo contatti vengono elaborati per l&apos;unica finalità di riscontrare le richieste di interazione o di supporto professionale.
-            </p>
-            <p>
-              <strong>Base giuridica:</strong> Il trattamento si fonda sul consenso esplicito dell&apos;interessato (Art. 6, par. 1, lett. a del GDPR), manifestato in modo vincolante tramite la selezione manuale della checkbox di validazione prima della trasmissione del segnale.
+              Tali soggetti possono agire in qualità di Responsabili del Trattamento, secondo quanto previsto dall&apos;art. 28 del GDPR.
             </p>
           </section>
 
           <section className={styles.section}>
-            <h2>04 // PROTOCOLLI DI SICUREZZA & RETENZIONE</h2>
+            <h2>07 // TRASFERIMENTO DEI DATI EXTRA UE</h2>
             <p>
-              Tutti i dati in transito sono protetti tramite connessioni cifrate (SSL/TLS). Non viene eseguito alcun database di persistenza a lungo termine sul server per i messaggi ricevuti: le informazioni vengono inviate direttamente su canali email blindati.
-            </p>
-            <p>
-              I dati personali saranno conservati per il tempo strettamente necessario all&apos;adempimento delle richieste dell&apos;utente (non oltre 12 mesi dalla chiusura dell&apos;ultimo uplink comunicativo), dopodiché si procederà all&apos;epurazione atomica dei record.
+              L’utilizzo di servizi email o hosting potrebbe comportare il trasferimento di dati verso paesi al di fuori dell’Unione Europea.
+              Tali trasferimenti avvengono nel rispetto delle garanzie previste dal GDPR (es. clausole contrattuali standard approvate dalla Commissione Europea).
             </p>
           </section>
 
           <section className={styles.section}>
-            <h2>05 // DIRITTI DEGLI INTERESSATI</h2>
+            <h2>08 // COOKIES e STRUMENTI DI TRACCIAMENTO</h2>
             <p>
-              Ai sensi degli articoli 15 e seguenti del GDPR, l&apos;utente ha il diritto in qualsiasi momento di richiedere la verifica dei propri dati presenti in archivio, la rettifica, l&apos;integrazione o la totale cancellazione (&quot;Diritto all&apos;oblio&quot;) inviando una notifica scritta al Titolare.
+              Questo sito utilizza esclusivamente: <strong>Cookie tecnici necessari</strong> al funzionamento del sito
+              Non vengono utilizzati cookie di profilazione o di terze parti per finalità pubblicitarie o di tracciamento.
             </p>
           </section>
+
+          <section className={styles.section}>
+            <h2>09 // DIRITTI DELL&apos;INTERESSATO</h2>
+            <p>
+             L&apos;ha il diritto di:
+            </p>
+            <ul>
+              <li>Accedere ai propri dati personali;</li>
+              <li>Richiedere la rettifica o la cancellazione dei dati;</li>
+              <li>Opporsi al trattamento dei dati;</li>
+            </ul>
+            <p>
+              per esercitare tali diritti, l&apos;interessato può contattare il Titolare del Trattamento tramite l&apos;indirizzo email fornito nella sezione 01.
+              <br />
+              L&apos;interessato ha inoltre il diritto di proporre reclamo all&apos;Autorità Garante per la protezione dei dati personali.
+            </p>
+          </section>
+
+
+
 
         </article>
 
