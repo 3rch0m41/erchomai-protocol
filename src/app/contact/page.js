@@ -29,7 +29,6 @@ export default function ContactPage() {
               <MessageSquare size={20} className={styles.icon} />
               <h1 className={styles.title}>ESTABLISH_CONNECTION</h1>
             </div>
-            <div className={styles.systemNote}>ENCRYPTION: RSA-4096_ACTIVE</div>
           </header>
 
           <form onSubmit={handleSubmit} className={styles.form}>
@@ -69,7 +68,6 @@ export default function ContactPage() {
                 {`.`}
               </label>
             </div>
-
             <button 
               type="submit" 
               className={styles.sendButton} 
@@ -80,11 +78,6 @@ export default function ContactPage() {
               {status === 'SENT' && <><ShieldCheck size={18} /> SIGNAL_RECEIVED</>}
             </button>
           </form>
-
-          <footer className={styles.boxFooter}>
-            <div className={styles.nodeInfo}>NODE_ID: 0x7F0001</div>
-            <div className={styles.latency}>LATENCY: 14ms</div>
-          </footer>
         </div>
       </main>
     </div>
