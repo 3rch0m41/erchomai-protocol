@@ -2,13 +2,17 @@
 
 import React, { useState } from 'react';
 import { Send, MessageSquare, User, Mail, ShieldCheck } from 'lucide-react';
+import Link from 'next/link';
 import styles from './contact.module.css';
 
 export default function ContactPage() {
   const [status, setStatus] = useState('READY'); // READY, SENDING, SENT
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!privacyAccepted) return; // Blocco di sicurezza lato client
+
     setStatus('SENDING');
     setTimeout(() => setStatus('SENT'), 2000);
   };
@@ -47,7 +51,30 @@ export default function ContactPage() {
               <textarea placeholder="INSERIRE MESSAGGIO QUI..." rows="5" required></textarea>
             </div>
 
-            <button type="submit" className={styles.sendButton} disabled={status !== 'READY'}>
+            {/* SEZIONE PRIVACY COMPLIANCE // GDPR_UPLINK_VALIDATION */}
+            <div className={styles.privacyGroup}>
+              <input 
+                type="checkbox" 
+                id="gdpr_consent" 
+                required
+                checked={privacyAccepted}
+                onChange={(e) => setPrivacyAccepted(e.target.checked)}
+                className={styles.privacyCheckbox}
+              />
+              <label htmlFor="gdpr_consent" className={styles.privacyLabel}>
+                {`Accetto il trattamento dei dati personali ai sensi del GDPR per la gestione della richiesta di uplink secondo le specifiche indicate nella `}
+                <Link href="/privacy" className={styles.privacyLink}>
+                  PRIVACY_POLICY
+                </Link>
+                {`.`}
+              </label>
+            </div>
+
+            <button 
+              type="submit" 
+              className={styles.sendButton} 
+              disabled={status !== 'READY' || !privacyAccepted}
+            >
               {status === 'READY' && <><Send size={18} /> BROADCAST_SIGNAL</>}
               {status === 'SENDING' && <span className={styles.loading}>TRANSMITTING...</span>}
               {status === 'SENT' && <><ShieldCheck size={18} /> SIGNAL_RECEIVED</>}

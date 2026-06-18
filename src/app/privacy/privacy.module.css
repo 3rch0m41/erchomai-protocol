@@ -1,0 +1,187 @@
+/* Sblocchiamo i padri per occupare esattamente l'altezza del monitor */
+:global(html),
+:global(body) {
+  height: 100vh !important;
+  overflow: hidden !important; /* Blocca lo scroll dell'intera finestra */
+  margin: 0;
+}
+
+.pageContainer {
+  position: relative;
+  width: 100%;
+  height: 100vh; 
+  background-color: #000000;
+  font-family: monospace;
+  /* Aumentiamo leggermente il padding inferiore del contenitore per staccare il flusso */
+  padding: 40px 20px 60px 20px; 
+  display: flex;
+  justify-content: center;
+  overflow: hidden; 
+}
+
+.gridOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(128, 128, 128, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mainContent {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 800px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 20px;
+  flex-shrink: 0; /* Impedisce all'header di rimpicciolirsi */
+}
+
+.navigationRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.returnLink {
+  font-size: 10px;
+  font-weight: bold;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.4);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.returnLink:hover {
+  color: #00f2fe;
+}
+
+.systemNote {
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: #00f2fe;
+  opacity: 0.4;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.icon {
+  color: #00f2fe;
+  filter: drop-shadow(0 0 8px rgba(0, 242, 254, 0.4));
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #ffffff;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: rgba(0, 242, 254, 0.5);
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+.mainDivider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, #00f2fe 0%, rgba(0, 242, 254, 0.1) 100%);
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   AREA DI SCROLL ISOLATA PER IL TESTO DELLA PRIVACY
+   Questo blocco assorbe tutto lo scroll, lasciando fermi Header e Footer
+   ========================================================================== */
+.legalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  flex: 1;             /* Occupa tutto lo spazio centrale rimasto */
+  overflow-y: auto;    /* Attiva lo scroll solo qui dentro */
+  padding-right: 15px; /* Spazio per la barra di scorrimento */
+  
+  /* CRUCIALE: Crea una zona di sicurezza invisibile sul fondo per evitare 
+     che il footer copra l'ultimo paragrafo dei diritti */
+  padding-bottom: 100px; 
+  
+  margin-bottom: 20px; 
+}
+
+/* Personalizzazione della barra di scorrimento in stile Cyberpunk per l'area di testo */
+.legalContent::-webkit-scrollbar {
+  width: 4px;
+}
+.legalContent::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+.legalContent::-webkit-scrollbar-thumb {
+  background: rgba(66, 203, 209, 0.3);
+  border-radius: 2px;
+}
+.legalContent::-webkit-scrollbar-thumb:hover {
+  background: #00f2fe;
+}
+
+.section h2 {
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #00f2fe;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.section p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: rgba(0, 242, 254, 0.75);
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.listItem {
+  font-size: 12px;
+  line-height: 1.8;
+  color: rgba(0, 242, 254, 0.6);
+  list-style: none;
+  padding-left: 10px;
+}
+
+/* Rimuoviamo il distanziatore perché gestito dal layout fisso */
+.footerSpacing {
+  display: none;
+}
+
+/* ==========================================================================
+   BLOCCAGGIO RIGIDO DEL FOOTER GLOBALE SUL FONDO DELLO SCHERMO
+   ========================================================================== */
+:global(footer), 
+:global([class*="Footer_footer"]),
+:global([class*="footer"]) {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  z-index: 99 !important;
+  background-color: rgba(0, 2, 10, 0.95) !important;
+}
