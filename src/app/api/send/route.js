@@ -41,7 +41,7 @@ export async function POST(req) {
     const data = await resend.emails.send({
       from: 'Web System <onboarding@resend.dev>', // In produzione sostituisci con un'email del tuo dominio (es. info@tuosito.com)
       to: 'malinigiulio97@gmail.com',     // <-- INSERISCI QUI L'INDIRIZZO DELLA TUA EMAIL PRIVATA
-      subject: '[UPLINK] Contact from: ${name}',
+      subject: `[UPLINK] Contact from: ${name}`,
       reply_to: email,                          // Permette di rispondere all'utente semplicemente facendo "Rispondi" dalla tua casella postale
       html: emailHtmlContent,
     });
