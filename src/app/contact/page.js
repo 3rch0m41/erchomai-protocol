@@ -6,15 +6,45 @@ import Link from 'next/link';
 import styles from './contact.module.css';
 
 export default function ContactPage() {
-  const [status, setStatus] = useState('READY'); // READY, SENDING, SENT
+  // Stati per gestire lo stato dell'invio
+  const [status, setStatus] = useState('READY'); // READY, SENDING, SENT, ERROR
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
-  const handleSubmit = (e) => {
+  // Stati per memorizzare i dati inseriti dall'utente
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+
+  // Funzione di invio asincrona
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!privacyAccepted) return; // Blocco di sicurezza lato client
 
     setStatus('SENDING');
-    setTimeout(() => setStatus('SENT'), 2000);
+
+    try {
+      // Chiamata all'endpoint API locale di Next.js
+      const response = await fetch('/api/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      if (response.ok) {
+        setStatus('SENT');
+        // Opzionale: svuota i campi dopo l'invio riuscito
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setStatus('ERROR');
+      }
+    } catch (error) {
+      console.error('Transmission failure:', error);
+      setStatus('ERROR');
+    }
   };
 
   return (
@@ -35,19 +65,37 @@ export default function ContactPage() {
             {/* Campo Nome */}
             <div className={styles.inputGroup}>
               <label><User size={14} /> SENDER_IDENTITY</label>
-              <input type="text" placeholder="NOME_OPERATORE" required />
+              <input 
+                type="text" 
+                placeholder="NOME_OPERATORE" 
+                required 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
 
             {/* Campo Email */}
             <div className={styles.inputGroup}>
               <label><Mail size={14} /> RETURN_SIGNAL_ADDRESS</label>
-              <input type="email" placeholder="EMAIL@NETWORK.NET" required />
+              <input 
+                type="email" 
+                placeholder="EMAIL@NETWORK.NET" 
+                required 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
 
             {/* Campo Messaggio */}
             <div className={styles.inputGroup}>
               <label><MessageSquare size={14} /> DATA_PACKAGE_CONTENT</label>
-              <textarea placeholder="INSERIRE MESSAGGIO QUI..." rows="5" required></textarea>
+              <textarea 
+                placeholder="INSERIRE MESSAGGIO QUI..." 
+                rows="5" 
+                required
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              ></textarea>
             </div>
 
             {/* SEZIONE PRIVACY COMPLIANCE // GDPR_UPLINK_VALIDATION */}
@@ -68,14 +116,16 @@ export default function ContactPage() {
                 {`.`}
               </label>
             </div>
+
             <button 
               type="submit" 
               className={styles.sendButton} 
-              disabled={status !== 'READY' || !privacyAccepted}
+              disabled={(status !== 'READY' && status !== 'ERROR') || !privacyAccepted}
             >
               {status === 'READY' && <><Send size={18} /> BROADCAST_SIGNAL</>}
               {status === 'SENDING' && <span className={styles.loading}>TRANSMITTING...</span>}
               {status === 'SENT' && <><ShieldCheck size={18} /> SIGNAL_RECEIVED</>}
+              {status === 'ERROR' && <span className={styles.error}>TRANSMISSION_FAILURE (RETRY)</span>}
             </button>
           </form>
         </div>
