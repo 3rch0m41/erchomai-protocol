@@ -1,6 +1,6 @@
 import { ChevronRight, Shield, Database, Activity, Cpu } from 'lucide-react';
 import Link from 'next/link';
-import styles from '@/app/logs/LogsPage.module.css';
+import styles from '@/app/(site)/logs/LogsPage.module.css';
 
 const TYPE_ICONS = {
   FORGE: Cpu,
@@ -18,6 +18,10 @@ export default function LogCard({ item }) {
   const Icon = TYPE_ICONS[item.type] || Activity;
   const prefix = PREFIX_TEXT[item.type] || "SYSTEM // ";
   const shortId = item._id ? item._id.substring(0, 3).toUpperCase() : "000";
+  // Data in formato fisso AAAA.MM.GG (niente locale: stesso output su server e browser)
+  const date = item.publishedAt
+    ? item.publishedAt.slice(0, 10).replaceAll('-', '.')
+    : "PENDING";
 
   return (
     <Link href={`/logs/${item.slug}`} className="block no-underline">
@@ -37,12 +41,12 @@ export default function LogCard({ item }) {
         </h3>
         
         <p className="text-[5pt] tracking-widest opacity-40 uppercase">
-          {`TYPE: ${item.type} | SEC: ${item.sector || "CORE_01"}`}
+          {`TYPE: ${item.type}`}
         </p>
         
         <div className={styles.cardFooter}>
           {/* Usiamo stringhe pulite per evitare conflitti con i caratteri speciali */}
-          <span>{`REF: ${item.ref || "CORE_SYS"}`}</span>
+          <span>{`DATE: ${date}`}</span>
           <span>{`ID: ${shortId}`}</span>
         </div>
       </div>

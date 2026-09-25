@@ -2,7 +2,12 @@
 import { client } from '@/sanity/lib/client';
 import { PortableText } from '@portabletext/react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import styles from './log.module.css';
+
+// Rigenera la pagina al massimo ogni 60 secondi, così i log pubblicati
+// nello Studio compaiono sul sito senza dover rifare il deploy.
+export const revalidate = 60;
 
 // 1. QUERY PULITA: Recupera i dati grezzi da Sanity senza elaborazioni di stringhe
 const LOG_QUERY = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] && slug.current == $slug ][0] {
@@ -32,12 +37,9 @@ export default async function LogPage({ params }) {
   const { slug } = await params;
   const log = await client.fetch(LOG_QUERY, { slug });
 
+  // Slug inesistente: vera risposta 404 con la pagina not-found.js del sito
   if (!log) {
-    return (
-      <main className="min-h-[50vh] flex items-center justify-center text-[#00f2fe] font-mono">
-        {">> ERROR_0x404: LOG_STREAM_CORRUPTED"}
-      </main>
-    );
+    notFound();
   }
 
   // 2. FORMATTAZIONE SICURA: Assegnazione del prefisso tramite template literal

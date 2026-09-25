@@ -1,16 +1,9 @@
+// Layout dello Studio: niente Navbar, Footer o CSS del sito.
+// <html> e <body> arrivano dal layout radice.
 export const metadata = {
   title: 'Sanity Studio',
-}
+};
 
 export default function StudioLayout({ children }) {
-  return (
-    <html lang="it">
-      <head>
-        {/* Nessun CSS globale del sito qui! */}
-      </head>
-      <body style={{ margin: 0, padding: 0 }}>
-        {children}
-      </body>
-    </html>
-  )
+  return children;
 }

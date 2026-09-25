@@ -206,3 +206,20 @@
 .privacyLink:hover {
   opacity: 0.8;
 }
+/* Esito dell'invio sotto il pulsante */
+.statusMessage {
+  min-height: 1.2rem; /* riserva lo spazio: il layout non salta quando compare */
+  margin: 0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+.statusError {
+  color: #ff6b6b;
+}
+
+.statusSuccess {
+  color: #42cbd1;
+}

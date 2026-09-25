@@ -1,5 +1,5 @@
 import { Search } from 'lucide-react';
-import styles from '@/app/logs/LogsPage.module.css';
+import styles from '@/app/(site)/logs/LogsPage.module.css';
 
 export default function SearchArea({ query, setQuery }) {
   return (

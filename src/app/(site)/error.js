@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { RefreshCcw, HardDrive } from 'lucide-react';
-import styles from './error-pages.module.css';
+import styles from '../error-pages.module.css';
 
 export default function Error({ error, reset }) {
   useEffect(() => {

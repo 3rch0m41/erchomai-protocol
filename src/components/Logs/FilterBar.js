@@ -1,4 +1,4 @@
-import styles from '@/app/logs/LogsPage.module.css';
+import styles from '@/app/(site)/logs/LogsPage.module.css';
 
 // 1. Definiamo le nuove categorie reali allineate con Sanity e LogsClient
 const CATEGORIES = [

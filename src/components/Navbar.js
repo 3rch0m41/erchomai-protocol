@@ -20,7 +20,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-4 group cursor-pointer">
           <span 
             className={`text-3xl font-black italic nav-link-custom ${pathname === '/' ? 'active-page' : ''}`}
-            suppressHydrationWarning={true}
+
           >
             ΣΠ
           </span>
@@ -35,7 +35,7 @@ export default function Navbar() {
               <Link 
                 href={link.path} 
                 className={`nav-link-custom ${pathname === link.path ? 'active-page' : ''}`}
-                suppressHydrationWarning={true}
+
               >
                 {link.name}
               </Link>

@@ -16,6 +16,14 @@ export default {
       options: { source: 'title' },
     },
     {
+      name: 'excerpt',
+      title: 'Estratto',
+      type: 'text',
+      rows: 2,
+      description: 'Breve riassunto mostrato nelle card della home (max 120 caratteri).',
+      validation: (Rule) => Rule.max(120),
+    },
+    {
       name: 'platform',
       title: 'Piattaforma / Evento',
       type: 'string',

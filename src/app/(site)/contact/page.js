@@ -1,14 +1,36 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Send, MessageSquare, User, Mail, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 import styles from './contact.module.css';
+
+// Messaggi mostrati all'utente per ciascun codice d'errore dell'API
+const ERROR_MESSAGES = {
+  RATE_LIMIT_EXCEEDED: 'ERR_RATE_LIMIT // Troppi invii ravvicinati: riprova tra qualche minuto.',
+  INVALID_RETURN_SIGNAL_ADDRESS: "ERR_ADDRESS // L'indirizzo email non è valido.",
+  DATA_PACKAGE_TOO_LARGE: 'ERR_OVERFLOW // Uno dei campi supera la lunghezza massima.',
+  PRIVACY_CONSENT_REQUIRED: 'ERR_CONSENT // Devi accettare la privacy policy per inviare.',
+  MISSING_DATA_PACKAGES: 'ERR_INCOMPLETE // Compila tutti i campi.',
+  NETWORK: 'ERR_NETWORK // Connessione assente: controlla la rete e riprova.',
+  DEFAULT: 'ERR_TRANSMISSION // Invio non riuscito: riprova più tardi.',
+};
+
+// Trova il messaggio adatto a partire dal codice restituito dall'API
+function getErrorMessage(code) {
+  if (typeof code !== 'string') return ERROR_MESSAGES.DEFAULT;
+  const key = Object.keys(ERROR_MESSAGES).find((k) => code.includes(k));
+  return key ? ERROR_MESSAGES[key] : ERROR_MESSAGES.DEFAULT;
+}
+
+// Dopo quanto tempo il form torna disponibile per un nuovo messaggio
+const RESET_AFTER_MS = 6000;
 
 export default function ContactPage() {
   // Stati per gestire lo stato dell'invio
   const [status, setStatus] = useState('READY'); // READY, SENDING, SENT, ERROR
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   // Stati per memorizzare i dati inseriti dall'utente
   const [name, setName] = useState('');
@@ -17,12 +39,24 @@ export default function ContactPage() {
   // Honeypot: resta vuoto per gli utenti reali, i bot tendono a compilarlo
   const [website, setWebsite] = useState('');
 
+  // Dopo un invio riuscito il form si riattiva da solo. Il consenso va
+  // ridato per ogni nuovo messaggio, quindi la checkbox torna deselezionata.
+  useEffect(() => {
+    if (status !== 'SENT') return;
+    const timer = setTimeout(() => {
+      setStatus('READY');
+      setPrivacyAccepted(false);
+    }, RESET_AFTER_MS);
+    return () => clearTimeout(timer);
+  }, [status]);
+
   // Funzione di invio asincrona
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!privacyAccepted) return; // Blocco di sicurezza lato client
 
     setStatus('SENDING');
+    setErrorMessage('');
 
     try {
       // Chiamata all'endpoint API locale di Next.js
@@ -41,10 +75,14 @@ export default function ContactPage() {
         setEmail('');
         setMessage('');
       } else {
+        // Legge il codice d'errore restituito dall'API per spiegare cosa non va
+        const data = await response.json().catch(() => ({}));
+        setErrorMessage(getErrorMessage(data.error));
         setStatus('ERROR');
       }
     } catch (error) {
       console.error('Transmission failure:', error);
+      setErrorMessage(ERROR_MESSAGES.NETWORK);
       setStatus('ERROR');
     }
   };
@@ -147,8 +185,18 @@ export default function ContactPage() {
               {status === 'READY' && <><Send size={18} /> BROADCAST_SIGNAL</>}
               {status === 'SENDING' && <span className={styles.loading}>TRANSMITTING...</span>}
               {status === 'SENT' && <><ShieldCheck size={18} /> SIGNAL_RECEIVED</>}
-              {status === 'ERROR' && <span className={styles.error}>TRANSMISSION_FAILURE (RETRY)</span>}
+              {status === 'ERROR' && <span>TRANSMISSION_FAILURE (RETRY)</span>}
             </button>
+
+            {/* Esito dell'invio, annunciato anche ai lettori di schermo */}
+            <p className={styles.statusMessage} role="status" aria-live="polite">
+              {status === 'ERROR' && <span className={styles.statusError}>{errorMessage}</span>}
+              {status === 'SENT' && (
+                <span className={styles.statusSuccess}>
+                  UPLINK_OK // Messaggio ricevuto, ti risponderò il prima possibile.
+                </span>
+              )}
+            </p>
           </form>
         </div>
       </main>

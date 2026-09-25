@@ -4,6 +4,10 @@ import BlogCard from '@/components/BlogCard';
 import Link from 'next/link';
 import { client } from '@/sanity/lib/client';
 
+// Rigenera la pagina al massimo ogni 60 secondi, così i log pubblicati
+// nello Studio compaiono sul sito senza dover rifare il deploy.
+export const revalidate = 60;
+
 // QUERY AGGIORNATA: Recupera gli ultimi 4 log interrogando i tre nuovi schemi
 const GET_LATEST_LOGS = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] ] | order(publishedAt desc)[0...4] {
   _id,
