@@ -14,6 +14,8 @@ export default function ContactPage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  // Honeypot: resta vuoto per gli utenti reali, i bot tendono a compilarlo
+  const [website, setWebsite] = useState('');
 
   // Funzione di invio asincrona
   const handleSubmit = async (e) => {
@@ -29,7 +31,7 @@ export default function ContactPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, privacyAccepted, website }),
       });
 
       if (response.ok) {
@@ -62,6 +64,23 @@ export default function ContactPage() {
           </header>
 
           <form onSubmit={handleSubmit} className={styles.form}>
+            {/* Honeypot anti-spam: invisibile e fuori dalla navigazione da tastiera */}
+            <div
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}
+            >
+              <label htmlFor="website">Website</label>
+              <input
+                type="text"
+                id="website"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                value={website}
+                onChange={(e) => setWebsite(e.target.value)}
+              />
+            </div>
+
             {/* Campo Nome */}
             <div className={styles.inputGroup}>
               <label><User size={14} /> SENDER_IDENTITY</label>
@@ -69,6 +88,7 @@ export default function ContactPage() {
                 type="text" 
                 placeholder="NOME_OPERATORE" 
                 required 
+                maxLength={100}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
@@ -81,6 +101,7 @@ export default function ContactPage() {
                 type="email" 
                 placeholder="EMAIL@NETWORK.NET" 
                 required 
+                maxLength={254}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
@@ -93,6 +114,7 @@ export default function ContactPage() {
                 placeholder="INSERIRE MESSAGGIO QUI..." 
                 rows="5" 
                 required
+                maxLength={5000}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
               ></textarea>
