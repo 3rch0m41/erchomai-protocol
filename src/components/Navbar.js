@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+import navLogo from '@/assets/erchomai-navlogo.png';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
@@ -24,14 +26,14 @@ export default function Navbar() {
       onKeyDown={(e) => { if (e.key === 'Escape') closeMenu(); }}
     >
       <div className="pl-5 lg:pl-20 flex-shrink-0">
-        <Link href="/" onClick={closeMenu} className="flex items-center gap-4 group cursor-pointer no-underline">
-          <span
-            className={`text-3xl font-black italic nav-link-custom ${pathname === '/' ? 'active-page' : ''}`}
-          >
-            ΣΠ
-          </span>
-          {/* Testo del logo: non è un <h1>, il titolo principale sta in ogni pagina */}
-          <span className="text-xl font-bold tracking-tight text-white/90 uppercase">ERCHOMAI</span>
+        <Link href="/" onClick={closeMenu} className="flex items-center group cursor-pointer no-underline">
+          {/* Logo: simbolo ΣΠ + scritta ERCHOMAI PROTOCOL in un'unica immagine */}
+          <Image
+            src={navLogo}
+            alt="ERCHOMAI PROTOCOL - Home"
+            preload
+            className="h-10 lg:h-11 w-auto transition-[filter] duration-300 group-hover:drop-shadow-[0_0_10px_rgba(0,242,254,0.55)]"
+          />
         </Link>
       </div>
 
