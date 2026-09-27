@@ -1,0 +1,93 @@
+@tailwind utilities;
+
+:root {
+  --background: #000212;
+  --foreground: #ffffff;
+}
+
+main {
+  flex:1;
+  flex-grow: 1; /* Prende tutto lo spazio tra Navbar e Footer */
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+html,body {
+  margin: 0 !important;
+  padding: 0 !important;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: sans-serif;
+    display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+
+body  {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Colore base per tutti i link */
+.nav-link-custom {
+  color: #ffffff !important;
+  text-decoration: none !important;
+  transition: all 0.3s ease;
+}
+
+/* Colore al passaggio del mouse */
+.nav-link-custom:hover {
+  color: #00f2fe !important;
+  opacity: 0.9;
+}
+
+/* CLASSE ACTIVE: La carichiamo in modo che il browser non faccia storie */
+.nav-link-custom.active-page {
+  color: #00f2fe !important;
+  text-shadow: 0 0 12px rgba(0, 242, 254, 0.7);
+}
+
+/* Evita il viola dei link visitati */
+a:visited {
+  color: inherit !important;
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+.blog-gallery-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.blog-card-wrapper {
+  flex-shrink: 0;
+  /* Qui decidiamo lo spazio tra le card */
+  padding-right: 100px; 
+}
+
+/* Rimuoviamo lo spazio dall'ultimo elemento per non sbilanciare il "See More" */
+.blog-card-wrapper:last-of-type {
+  padding-right: 40px;
+}
+
+/* Utility per nascondere la scrollbar su tutti i browser */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

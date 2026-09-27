@@ -56,11 +56,11 @@ export default async function HomePage() {
       {/* Background HUD Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none -z-10" />
       
-      <main className="w-full flex flex-col items-center relative z-10 px-6 pb-24">
+      <main className="w-full box-border flex flex-col items-center relative z-10 px-4 md:px-6 pb-16 md:pb-24">
         
         {/* HERO ZONE */}
-        <div className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%] min-h-[460px] mt-16 rounded-[40px] border border-white/10 bg-white/[0.01] backdrop-blur-md relative flex flex-col items-center justify-center p-12 shadow-[0_0_80px_rgba(0,0,0,0.8)]">
-          <div className="absolute top-8 left-10 flex items-center gap-2 text-[#00f2fe]/30 text-[8px] tracking-[0.5em] font-bold uppercase">
+        <div className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%] min-h-[380px] md:min-h-[460px] mt-8 md:mt-16 rounded-[32px] md:rounded-[40px] border border-white/10 bg-white/[0.01] backdrop-blur-md relative flex flex-col items-center justify-center px-6 py-14 md:p-12 shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+          <div className="absolute top-6 left-6 md:top-8 md:left-10 flex items-center gap-2 text-[#00f2fe]/30 text-[8px] tracking-[0.5em] font-bold uppercase">
             <Zap className="w-3.5 h-3.5 animate-pulse" />
             <span>ERCHOMAI_PROTOCOL_v4.1</span>
           </div>
@@ -70,18 +70,19 @@ export default async function HomePage() {
             <span className="text-5xl md:text-6xl font-black italic">ΣΠ</span>
           </div>
 
-          <h2 className="text-lg md:text-xl lg:text-2xl font-extralight tracking-[0.12em] text-center uppercase leading-tight">
+          {/* Titolo principale della home (my-[0.83em] mantiene i margini che aveva come h2) */}
+          <h1 className="text-lg md:text-xl lg:text-2xl font-extralight tracking-[0.12em] text-center uppercase leading-tight my-[0.83em]">
             Security is not a <span className="text-white/10 italic">destination</span>;<br />
             <span className="font-bold text-white tracking-[0.2em] text-2xl md:text-4xl mt-4 block leading-none">
               It is a state of arrival.
             </span>
-          </h2>
+          </h1>
         </div>
 
         {/* SECTION HEADER */}
-        <div className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%] mt-28 mb-10">
-          <div className="flex items-end justify-between px-2">
-            <h2 className="text-4xl md:text-5xl font-black text-[#00f2fe] uppercase italic leading-none">
+        <div className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%] mt-14 md:mt-28 mb-8 md:mb-10">
+          <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 px-2">
+            <h2 className="text-3xl md:text-5xl font-black text-[#00f2fe] uppercase italic leading-none m-0">
               [SYSTEM_LOG]
             </h2>
             <Link href="/logs" className="group flex items-center gap-2 mb-1 no-underline">
@@ -95,8 +96,8 @@ export default async function HomePage() {
         </div>
 
         {/* BLOG CARDS ZONE */}
-        <section className="w-full max-w-[85%] md:max-w-[50%] lg:max-w-[42%]">
-          <div className="flex flex-row gap-6 lg:gap-8 items-stretch">
+        <section className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%]">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-stretch">
             {latestLogs.length > 0 ? (
               latestLogs.map((log) => (
                 <div key={log._id} className="flex-1 min-w-0">

@@ -223,3 +223,38 @@
 .statusSuccess {
   color: #42cbd1;
 }
+
+/* MOBILE: box a tutta larghezza e testi piccoli più leggibili */
+@media (max-width: 767.98px) {
+  .pageContainer {
+    overflow: visible;
+  }
+
+  .mainContent {
+    padding: 1.25rem 0.75rem 2rem;
+  }
+
+  .contactBox {
+    box-sizing: border-box;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .systemNote,
+  .boxFooter {
+    font-size: 9px;
+  }
+
+  .inputGroup label {
+    font-size: 10px;
+  }
+
+  /* 16px evita lo zoom automatico di iOS quando si tocca un campo */
+  .inputGroup input,
+  .inputGroup textarea {
+    font-size: 16px;
+  }
+
+  .privacyLabel {
+    font-size: 12px;
+  }
+}

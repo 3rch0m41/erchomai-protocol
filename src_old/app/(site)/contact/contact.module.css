@@ -1,0 +1,225 @@
+.pageContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #00010a;
+  overflow: hidden; /* Blocca lo scroll del browser */
+  position: relative;
+  min-height: 0;
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 242, 254, 0.02) 50%);
+  background-size: 100% 4px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.mainContent {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.contactBox {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(0, 15, 25, 0.9);
+  border: 1px solid #42cbd1;
+  box-shadow: 0 0 30px rgba(66, 203, 209, 0.15);
+  padding: 2rem;
+  position: relative;
+}
+
+.header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(66, 203, 209, 0.3);
+  padding-bottom: 1rem;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  color: #fff;
+}
+
+.systemNote {
+  font-size: 6pt;
+  color: #42cbd1;
+  opacity: 0.6;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup label {
+  font-size: 7pt;
+  color: #42cbd1;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inputGroup input, .inputGroup textarea {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(66, 203, 209, 0.3);
+  padding: 0.75rem;
+  color: #fff;
+  font-family: inherit;
+  font-size: 9pt;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.inputGroup input:focus, .inputGroup textarea:focus {
+  border-color: #42cbd1;
+  box-shadow: 0 0 10px rgba(66, 203, 209, 0.1);
+}
+
+.sendButton {
+  margin-top: 1rem;
+  background: #42cbd1;
+  color: #000;
+  border: none;
+  padding: 1rem;
+  font-weight: 900;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.sendButton:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 0 20px rgba(66, 203, 209, 0.4);
+}
+
+.sendButton:disabled {
+  background: rgba(66, 203, 209, 0.2);
+  color: rgba(255, 255, 255, 0.5);
+  cursor: not-allowed;
+}
+
+.boxFooter {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  font-size: 6pt;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.loading {
+  animation: pulse 1s infinite;
+}
+
+/* Struttura del blocco privacy */
+.privacyGroup {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+/* Checkbox personalizzata stile terminale */
+.privacyCheckbox {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  cursor: pointer;
+  appearance: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 4px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.privacyCheckbox:checked {
+  background-color: rgba(0, 242, 254, 0.1);
+  border-color: #00f2fe;
+  box-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
+}
+
+/* Segno di spunta custom (simbolo v) */
+.privacyCheckbox:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #00f2fe;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+/* Testo dell'informativa */
+.privacyLabel {
+  font-family: monospace;
+  font-size: 9pt;
+  color: rgba(0, 242, 254, 0.6);
+  line-height: 1.4;
+  user-select: none;
+}
+
+/* Link ipertestuale alla policy */
+.privacyLink {
+  color: #00f2fe;
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
+}
+
+.privacyLink:hover {
+  opacity: 0.8;
+}
+/* Esito dell'invio sotto il pulsante */
+.statusMessage {
+  min-height: 1.2rem; /* riserva lo spazio: il layout non salta quando compare */
+  margin: 0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  line-height: 1.4;
+}
+
+.statusError {
+  color: #ff6b6b;
+}
+
+.statusSuccess {
+  color: #42cbd1;
+}

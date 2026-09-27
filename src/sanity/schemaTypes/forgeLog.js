@@ -54,7 +54,24 @@ export default {
       name: 'content',
       title: 'Corpo del Report (Code, Matrix, Text)',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'code' }], // Richiede il plugin @sanity/code-input
+      of: [
+        { type: 'block' },
+        { type: 'code', options: { withFilename: true } },
+        {
+          type: 'image',
+          title: 'Immagine',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Testo alternativo',
+              type: 'string',
+              description: "Descrive l'immagine a chi usa un lettore di schermo o quando non si carica.",
+            },
+            { name: 'caption', title: 'Didascalia', type: 'string' },
+          ],
+        },
+      ], // Richiede il plugin @sanity/code-input
     },
   ],
 }

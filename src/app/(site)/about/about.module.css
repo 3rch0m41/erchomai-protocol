@@ -153,3 +153,57 @@
   display: flex;
   justify-content: space-between;
 }
+/* MOBILE: scheda e testo uno sotto l'altro, la pagina scorre normalmente */
+@media (max-width: 767.98px) {
+  .pageContainer {
+    overflow: visible;
+  }
+
+  .mainContent {
+    padding: 1.25rem 0.75rem 2rem;
+  }
+
+  .dossierWrapper {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sidebar {
+    box-sizing: border-box;
+    width: 100%;
+    border-right: 0;
+    border-bottom: 1px solid rgba(0, 242, 254, 0.1);
+    padding: 1.5rem;
+  }
+
+  .profileFrame {
+    max-width: 180px;
+    align-self: center;
+  }
+
+  .contentScroll {
+    overflow: visible;
+    padding: 1.5rem;
+  }
+
+  .glitchTitle {
+    font-size: 1.7rem;
+    word-break: break-word;
+  }
+
+  .statusRow,
+  .contentFooter {
+    font-size: 10px;
+  }
+
+  .breadcrumb,
+  .techList {
+    font-size: 11px;
+  }
+
+  /* Le righe finali vanno una sotto l'altra invece di attaccarsi */
+  .contentFooter {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

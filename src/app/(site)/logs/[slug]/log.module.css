@@ -123,6 +123,15 @@
   letter-spacing: 0.1em;
 }
 
+/* Nome del file nel blocco di codice: mantiene maiuscole/minuscole originali */
+.codeFilename {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
+  margin-right: 12px;
+}
+
 .codeControls {
   display: flex;
   gap: 6px;
@@ -144,6 +153,8 @@
 
 /* Colonna numeri di riga */
 .lineNumbers {
+  margin: 0;          /* toglie il margine predefinito dei <pre> */
+  line-height: 21.6px; /* stessa interlinea del codice: i numeri restano allineati */
   padding: 1.5rem 0.8rem;
   border-right: 1px solid rgba(0, 242, 254, 0.1);
   color: rgba(0, 242, 254, 0.2);
@@ -163,6 +174,7 @@
 
 .codeText {
   font-size: 13.5px;
+  line-height: 21.6px;
   color: rgba(0, 242, 254, 0.9);
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
   white-space: pre;
@@ -180,17 +192,50 @@
 }
 
 @media (max-width: 768px) {
-  .contentWrapper { max-width: 95%; }
+  .contentWrapper { max-width: 100%; padding: 16px 16px 0; }
   .header {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 15px;
+    padding: 24px 16px 16px;
   }
-  .returnLink { justify-self: center; }
+  .returnLink { justify-self: center; font-size: 14px; }
+  .flickerTitle { overflow-wrap: anywhere; }
+  /* I dettagli vanno a capo invece di schiacciarsi */
+  .detailsRow {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 8px 20px;
+    font-size: 12px;
+  }
+  /* URL e parole lunghe non allargano la pagina */
+  .articleContainer { overflow-wrap: anywhere; }
+  /* Spazio tra la fine dell'articolo e il footer */
+  .contentWrapper { padding-bottom: 32px; }
 }
 
 @keyframes flicker {
   0%, 18%, 22%, 25%, 53%, 57%, 100% { opacity: 1; }
   20% { opacity: 0.8; }
   55% { opacity: 0.9; }
+}
+/* Immagini e screenshot negli articoli */
+.figure {
+  margin: 2rem 0;
+}
+
+.figureImage {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgba(0, 242, 254, 0.2);
+  border-radius: 8px;
+}
+
+.figureCaption {
+  margin-top: 0.6rem;
+  font-family: monospace;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: rgba(0, 242, 254, 0.7);
 }

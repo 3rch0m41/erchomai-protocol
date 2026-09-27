@@ -90,3 +90,44 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(66, 203, 209, 0.2), transparent);
 }
+/* MOBILE: le tre sezioni vanno una sotto l'altra, centrate */
+@media (max-width: 767.98px) {
+  .footer {
+    padding: 1.5rem 0 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+    text-align: center;
+  }
+
+  .section,
+  .sectionCenter {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .statusText {
+    border-left: 0;
+    padding-left: 0;
+    font-size: 9px;
+    line-height: 1.5;
+  }
+
+  .copyright {
+    font-size: 9px;
+  }
+
+  .nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+  }
+
+  .link {
+    font-size: 11px;
+    padding: 0.4rem 0; /* area di tocco più comoda */
+  }
+}

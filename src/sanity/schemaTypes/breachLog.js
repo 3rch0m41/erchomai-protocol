@@ -59,7 +59,24 @@ export default {
       name: 'content',
       title: 'Analisi Tecnica e Flag Walkthrough',
       type: 'array',
-      of: [{ type: 'block' }, { type: 'code' }],
+      of: [
+        { type: 'block' },
+        { type: 'code', options: { withFilename: true } },
+        {
+          type: 'image',
+          title: 'Immagine',
+          options: { hotspot: true },
+          fields: [
+            {
+              name: 'alt',
+              title: 'Testo alternativo',
+              type: 'string',
+              description: "Descrive l'immagine a chi usa un lettore di schermo o quando non si carica.",
+            },
+            { name: 'caption', title: 'Didascalia', type: 'string' },
+          ],
+        },
+      ],
     },
   ],
 }

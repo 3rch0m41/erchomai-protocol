@@ -5,6 +5,11 @@ import LogsClient from './LogsClient';
 // nello Studio compaiono sul sito senza dover rifare il deploy.
 export const revalidate = 60;
 
+export const metadata = {
+  title: 'Logs',
+  description: 'Archivio completo dei log: write-up di CTF, analisi di malware e progetti di sicurezza.',
+};
+
 const LOGS_QUERY = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] ] | order(publishedAt desc) {
   _id,
   _type,

@@ -16,7 +16,7 @@ export default function BlogCard({ title, excerpt, slug }) {
             {title || "ENCRYPTED_LOG"}
           </h3>
           
-          <p className="text-[9px] text-[#00f2fe]/60 line-clamp-1 italic mt-1 font-light leading-none">
+          <p className="text-[11px] md:text-[9px] text-[#00f2fe]/60 line-clamp-2 md:line-clamp-1 italic mt-1 font-light leading-snug md:leading-none">
             {excerpt || "NO_DATA_EXTRACTED..."}
           </p>
         </div>

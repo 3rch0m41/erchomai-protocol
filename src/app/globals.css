@@ -1,4 +1,8 @@
-@tailwind utilities;
+/* Tailwind 4: tema (spaziature, colori, breakpoint md:/lg:...) + classi di utilità.
+   Il "preflight" (reset CSS di Tailwind) non viene importato di proposito,
+   per non alterare gli stili di base su cui è costruito il sito. */
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 :root {
   --background: #000212;
@@ -19,15 +23,32 @@ html,body {
   color: var(--foreground);
   background: var(--background);
   font-family: sans-serif;
-    display: flex;
-  flex-direction: column;
-  height: 100vh;
-  margin: 0;
 }
 
-body  {
+/* DESKTOP: layout "da app" alto quanto lo schermo. Navbar in alto, footer
+   sempre visibile in basso e il contenuto (.site-main) che scorre in mezzo. */
+body {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.site-main {
+  overflow-y: auto;
+}
+
+/* MOBILE: la pagina scorre normalmente e il footer sta in fondo al contenuto */
+@media (max-width: 767.98px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .site-main {
+    overflow: visible;
+  }
 }
 
 /* Colore base per tutti i link */

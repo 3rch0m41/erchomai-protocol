@@ -13,7 +13,7 @@ export default function NotFound() {
   return (
     <>
       <Navbar />
-      <main>
+      <main className="site-main">
         <div className={styles.errorWrapper}>
           <div className={styles.glitchBox}>
             {/* L'icona è centrata */}

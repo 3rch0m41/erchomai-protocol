@@ -18,7 +18,7 @@ export default function Footer() {
           </div>
           <p className={styles.statusText}>
             STATUS: <span className="text-green-500">OPERATIONAL</span><br />
-            ENCRYPTION: AES-256_ACTIVE
+            ENCRYPTION: TLS_ACTIVE
           </p>
         </div>
 

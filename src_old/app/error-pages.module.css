@@ -1,0 +1,86 @@
+.errorWrapper {
+  /* Calcola l'altezza: 100% della finestra meno Navbar e Footer */
+  /* Assumi che la tua Navbar sia ~64px e il Footer ~40px */
+  
+  background-color: transparent;
+  position: relative;
+  overflow: hidden; /* Impedisce scroll interni */
+  padding: 1rem;
+  flex-grow: 1; /* Riempie lo spazio del main senza superarlo */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitchBox {
+  z-index: 10;
+  padding: 2rem;
+  border: 1px solid rgba(255, 62, 62, 0.5);
+  background: rgba(255, 62, 62, 0.03);
+  max-width: 400px;
+  width: 100%;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.errorCode {
+  font-size: 8rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.15);
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.errorIcon { color: #42cbd1; margin-bottom: 1rem; }
+.errorIconCritical { color: #ff3e3e; margin-bottom: 1rem; }
+
+.errorTitle {
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.errorMsg {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 2rem;
+  max-width: 400px;
+  text-transform: uppercase;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 1px solid #42cbd1;
+  color: #42cbd1;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background: #42cbd1;
+  color: #000;
+  box-shadow: 0 0 20px rgba(66, 203, 209, 0.4);
+}
+
+.scanline {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.1) 51%);
+  background-size: 100% 4px;
+  pointer-events: none;
+}
