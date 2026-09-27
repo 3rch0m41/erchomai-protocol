@@ -2,6 +2,8 @@ import React from 'react';
 import { Zap, ChevronRight } from 'lucide-react';
 import BlogCard from '@/components/BlogCard';
 import Link from 'next/link';
+import Image from 'next/image';
+import heroLogo from '@/assets/erchomai-hero.png';
 import { client } from '@/sanity/lib/client';
 
 // Rigenera la pagina al massimo ogni 60 secondi, così i log pubblicati
@@ -64,21 +66,32 @@ export default async function HomePage() {
       <div className="relative z-10 flex-1 flex flex-col w-full max-w-[1700px] mx-auto box-border px-4 md:px-8 lg:px-20 pt-4 lg:pt-5 pb-8 lg:pb-6">
 
         {/* HERO ZONE */}
-        <div className="relative flex-1 min-h-[380px] md:min-h-[260px] w-full box-border rounded-[32px] md:rounded-[40px] border border-white/10 bg-white/[0.01] bg-[radial-gradient(ellipse_at_center,rgba(0,242,254,0.05),transparent_65%)] backdrop-blur-md flex flex-col items-center justify-center px-6 py-10 md:py-6 overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+        <div className="relative flex-1 min-h-[380px] md:min-h-[260px] w-full box-border rounded-[32px] md:rounded-[40px] border border-white/10 bg-white/[0.01] bg-[radial-gradient(ellipse_at_center,rgba(0,242,254,0.05),transparent_65%)] backdrop-blur-md flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-[clamp(32px,5vw,96px)] px-6 lg:px-12 py-10 md:py-6 overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)]">
           <div className="absolute top-6 left-6 md:top-8 md:left-10 flex items-center gap-2 text-[#00f2fe]/30 text-[8px] tracking-[0.5em] font-bold uppercase">
             <Zap className="w-3.5 h-3.5 animate-pulse" />
             <span>ERCHOMAI_PROTOCOL_v4.1</span>
           </div>
 
-          {/* Le dimensioni seguono l'altezza dello schermo (vh), entro un minimo e un massimo */}
-          <div className="w-[clamp(84px,14vh,140px)] h-[clamp(84px,14vh,140px)] border border-[#00f2fe]/20 rounded-[clamp(22px,3.5vh,34px)] flex items-center justify-center bg-black/40 mb-[clamp(20px,4vh,44px)] overflow-hidden relative flex-shrink-0">
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00f2fe]/15 to-transparent h-1/2 w-full animate-[scan_4s_linear_infinite]" />
-            <span className="text-[clamp(2.4rem,6.5vh,4.25rem)] font-black italic">ΣΠ</span>
+          {/* Logo a sinistra (sopra su telefono), alto quanto il riquadro */}
+          {/* Telefono: logo sopra la frase, a grandezza naturale (la pagina scorre).
+              Tablet: il logo occupa lo spazio che resta sopra la frase.
+              Desktop: logo a sinistra, alto quasi quanto il riquadro. */}
+          <div className="relative w-full flex justify-center md:flex-1 md:min-h-[140px] lg:flex-none lg:min-h-0 lg:w-auto lg:h-[90%] lg:max-h-[600px] lg:aspect-[842/708] lg:flex-shrink-0">
+            <Image
+              src={heroLogo}
+              alt="ERCHOMAI PROTOCOL"
+              preload
+              sizes="(max-width: 1024px) 90vw, 640px"
+              className="w-full max-w-[380px] h-auto md:absolute md:inset-0 md:h-full md:w-full md:max-w-none object-contain"
+            />
           </div>
 
-          <h1 className="m-0 text-[clamp(1rem,2.4vh,1.6rem)] font-extralight tracking-[0.12em] text-center uppercase leading-tight">
-            Security is not a <span className="text-white/10 italic">destination</span>;<br />
-            <span className="font-bold text-white tracking-[0.2em] text-[clamp(1.6rem,4.8vh,3.4rem)] mt-[clamp(8px,1.8vh,20px)] block leading-none">
+          {/* Su telefono la frase è più contenuta; da tablet in su segue l'altezza dello schermo */}
+          <h1 className="m-0 text-[1rem] md:text-[clamp(1rem,2.4vh,1.6rem)] font-extralight tracking-[0.12em] text-center lg:text-left uppercase leading-tight">
+            Security is not a{" "}
+            {/* Parola chiave in azzurro, il colore d'accento del sito */}
+            <span className="text-[#00f2fe] italic font-normal drop-shadow-[0_0_12px_rgba(0,242,254,0.35)]">destination</span>;<br />
+            <span className="font-bold text-white tracking-[0.2em] text-[1.85rem] md:text-[clamp(1.6rem,4.8vh,3.4rem)] mt-[clamp(8px,1.8vh,20px)] block leading-none">
               It is a state of arrival.
             </span>
           </h1>
