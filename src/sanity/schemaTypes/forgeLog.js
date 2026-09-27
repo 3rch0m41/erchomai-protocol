@@ -1,77 +1,80 @@
-// src/sanity/schemas/forgeLog.js
+import { baseFields, groups } from './_shared';
+
+const CODE_SKELETON = [
+  ['h2', 'Il problema'],
+  ['normal', 'Cosa mancava, perché hai costruito questo.'],
+  ['h2', 'Architettura'],
+  ['normal', 'Come è strutturato (aggiungi un\u2019immagine dello schema, se serve).'],
+  ['h2', 'Dettagli implementativi'],
+  ['normal', ''],
+  ['h2', 'Utilizzo'],
+  ['normal', 'Installazione ed esempi.'],
+  ['h2', 'Security considerations'],
+  ['normal', 'Validazione input, gestione dei segreti, usi non consentiti.'],
+  ['h2', 'Risultati e limiti noti'],
+  ['normal', ''],
+].map(([style, text], i) => ({
+  _type: 'block', _key: `sk${i}`, style, markDefs: [],
+  children: [{ _type: 'span', _key: `sk${i}s`, text }],
+}));
+
 export default {
   name: 'forgeLog',
-  title: 'FORGE_CRAFT // Tooling',
+  title: 'Code development',
   type: 'document',
-  fields: [
-    {
-      name: 'title',
-      title: 'Nome Tool / Script',
-      type: 'string',
-      description: 'Es: PY_PDF_TABLE_EXTRACTOR (Il prefisso FORGE_CRAFT // verrà gestito dal codice)',
-    },
-    {
-      name: 'slug',
-      title: 'Slug',
-      type: 'slug',
-      options: { source: 'title' },
-    },
-    {
-      name: 'excerpt',
-      title: 'Estratto',
-      type: 'text',
-      rows: 2,
-      description: 'Breve riassunto mostrato nelle card della home (max 120 caratteri).',
-      validation: (Rule) => Rule.max(120),
-    },
-    {
-      name: 'version',
-      title: 'Build Version',
-      type: 'string',
-      initialValue: 'v1.0.0',
-    },
-    {
-      name: 'language',
-      title: 'Linguaggio Principale',
-      type: 'string',
-      options: {
-        list: ['Python', 'TypeScript', 'Go', 'Rust', 'Bash', 'Next.js'],
+  groups,
+  fields: baseFields({
+    titleTitle: 'Nome del progetto',
+    titleDesc: 'Es: subhunter. Il prefisso CODE_FORGE // lo aggiunge il sito.',
+    statusList: ['ACTIVE', 'STABLE', 'BETA', 'ARCHIVED'],
+    statusInitial: 'STABLE',
+    extraMeta: [
+      {
+        name: 'projectType',
+        title: 'Tipo di progetto',
+        type: 'string',
+        options: { list: ['CLI Tool', 'Script', 'Library', 'Web app', 'Automation', 'PoC'] },
       },
-    },
-    {
-      name: 'status',
-      title: 'Status',
-      type: 'string',
-      options: { list: ['STABLE', 'BETA', 'DEGRADED'] },
-      initialValue: 'STABLE',
-    },
-    {
-      name: 'publishedAt',
-      title: 'Timestamp',
-      type: 'datetime',
-    },
-    {
-      name: 'content',
-      title: 'Corpo del Report (Code, Matrix, Text)',
-      type: 'array',
-      of: [
-        { type: 'block' },
-        { type: 'code', options: { withFilename: true } },
-        {
-          type: 'image',
-          title: 'Immagine',
-          options: { hotspot: true },
-          fields: [
-            {
-              name: 'alt',
-              title: 'Testo alternativo',
-              type: 'string',
-              description: "Descrive l'immagine a chi usa un lettore di schermo o quando non si carica.",
-            },
-            { name: 'caption', title: 'Didascalia', type: 'string' },
-          ],
+      {
+        name: 'languages',
+        title: 'Linguaggi',
+        type: 'array',
+        of: [{ type: 'string' }],
+        options: {
+          layout: 'grid',
+          list: ['Python', 'TypeScript', 'JavaScript', 'Go', 'Rust', 'C', 'C++', 'Bash', 'PowerShell'],
         },
-      ], // Richiede il plugin @sanity/code-input
-    },
-  ],
-}
+      },
+      { name: 'version', title: 'Versione', type: 'string', initialValue: 'v1.0.0' },
+      { name: 'license', title: 'Licenza', type: 'string', description: 'Es: MIT, GPL-3.0, Apache-2.0' },
+      {
+        name: 'role',
+        title: 'Ruolo',
+        type: 'string',
+        options: { list: ['Solo', 'Team'], layout: 'radio' },
+      },
+      {
+        name: 'repoUrl',
+        title: 'URL del repository',
+        type: 'url',
+        description: 'Mostrato come pulsante SOURCE_CODE. Deve iniziare con https://',
+        validation: (Rule) => Rule.uri({ scheme: ['https', 'http'] }),
+      },
+      {
+        name: 'demoUrl',
+        title: 'URL della demo',
+        type: 'url',
+        description: 'Mostrato come pulsante LIVE_DEMO. Deve iniziare con https://',
+        validation: (Rule) => Rule.uri({ scheme: ['https', 'http'] }),
+      },
+    ],
+  }),
+  initialValue: { content: CODE_SKELETON },
+  preview: {
+    select: { title: 'title', projectType: 'projectType', version: 'version' },
+    prepare: ({ title, projectType, version }) => ({
+      title: title || '(senza nome)',
+      subtitle: `CODE · ${[projectType, version].filter(Boolean).join(' · ') || '—'}`,
+    }),
+  },
+};

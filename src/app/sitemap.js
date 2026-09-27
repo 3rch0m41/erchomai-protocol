@@ -1,11 +1,12 @@
 import { client } from '@/sanity/lib/client';
 import { getSiteUrl } from '@/lib/site';
+import { LOG_TYPES_GROQ } from '@/lib/logTypes';
 
 // Genera /sitemap.xml con le pagine fisse e tutti i log pubblicati.
 // Si aggiorna al massimo ogni ora.
 export const revalidate = 3600;
 
-const SLUGS_QUERY = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] && defined(slug.current) ] {
+const SLUGS_QUERY = `*[ _type in ${LOG_TYPES_GROQ} && defined(slug.current) ] {
   "slug": slug.current,
   _updatedAt
 }`;

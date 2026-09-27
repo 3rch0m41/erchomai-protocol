@@ -6,23 +6,16 @@ import SearchArea from '@/components/Logs/SearchArea';
 import FilterBar from '@/components/Logs/FilterBar';
 import LogCard from '@/components/Logs/LogCard';
 import styles from './LogsPage.module.css';
+import { getLogType, FILTER_CATEGORIES } from '@/lib/logTypes';
 
 export default function LogsClient({ initialLogs = [] }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFilter, setActiveFilter] = useState("ALL");
 
-  // Mappa lo _type di Sanity sulla categoria del filtro
-  const getLogType = (type) => {
-    if (type === "forgeLog") return "FORGE";
-    if (type === "breachLog") return "BREACH";
-    if (type === "malwareLog") return "SANDBOX";
-    return "SYSTEM";
-  };
-
   // Conteggi basati sul tipo mappato
   const categoryCounts = useMemo(() => {
     const counts = { ALL: initialLogs.length };
-    ["FORGE", "BREACH", "SANDBOX"].forEach(cat => {
+    FILTER_CATEGORIES.filter(c => c.id !== "ALL").map(c => c.id).forEach(cat => {
       counts[cat] = initialLogs.filter(l => getLogType(l._type) === cat).length;
     });
     return counts;
@@ -32,9 +25,9 @@ export default function LogsClient({ initialLogs = [] }) {
   const filteredLogs = useMemo(() => {
     return initialLogs.filter(log => {
       const logType = getLogType(log._type);
-      const title = log.title || "";
-      
-      const matchesSearch = title.toLowerCase().includes(searchQuery.toLowerCase());
+      // La ricerca guarda titolo, estratto e tag (es. "SQLi", "Kerberoasting")
+      const haystack = [log.title, log.excerpt, ...(log.tags || [])].join(' ').toLowerCase();
+      const matchesSearch = haystack.includes(searchQuery.toLowerCase());
       const matchesFilter = activeFilter === "ALL" || logType === activeFilter;
       
       return matchesSearch && matchesFilter;
@@ -69,7 +62,7 @@ export default function LogsClient({ initialLogs = [] }) {
                   key={log._id} 
                   item={{
                     ...log,
-                    type: getLogType(log._type) // Passiamo il tipo normalizzato (FORGE, BREACH, SANDBOX)
+                    type: getLogType(log._type) // Tipo normalizzato (CTF, CODE, LAB)
                   }} 
                 />
               ))

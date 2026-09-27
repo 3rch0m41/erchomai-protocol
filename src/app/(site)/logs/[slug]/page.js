@@ -4,6 +4,18 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { highlightCode } from '@/lib/highlight';
 import { SITE_NAME } from '@/lib/site';
+import { getLogPrefix, LOG_TYPES_GROQ } from '@/lib/logTypes';
+import {
+  getReportSpecs,
+  SpecGrid,
+  TagList,
+  KeyTakeaways,
+  ProjectLinks,
+  LabObjective,
+  LabTopology,
+  LabSafety,
+  MalwareIndicators,
+} from '@/components/Logs/ReportPanels';
 import { PortableText } from '@portabletext/react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -13,34 +25,15 @@ import styles from './log.module.css';
 // nello Studio compaiono sul sito senza dover rifare il deploy.
 export const revalidate = 60;
 
-// 1. QUERY PULITA: Recupera i dati grezzi da Sanity senza elaborazioni di stringhe
-const LOG_QUERY = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] && slug.current == $slug ][0] {
-  _id,
-  _type,
-  title,
-  excerpt,
-  publishedAt,
+// Legge tutti i campi del report ("..."); per le immagini del contenuto
+// aggiunge le dimensioni, così la pagina riserva lo spazio prima del caricamento
+const LOG_QUERY = `*[ _type in ${LOG_TYPES_GROQ} && slug.current == $slug ][0] {
+  ...,
   "content": content[] {
     ...,
-    // Per le immagini servono anche le dimensioni, per riservare lo spazio
     _type == "image" => { "dimensions": asset->metadata.dimensions }
-  },
-  status,
-  version,
-  language,
-  platform,
-  difficulty,
-  exploitVec,
-  fileHash,
-  sandboxEnv
+  }
 }`;
-
-// Oggetto di mapping per i prefissi testuali sicuri
-const PREFIX_TEXT = {
-  forgeLog: "FORGE_CRAFT // ",
-  breachLog: "BREACH_REPORT // ",
-  malwareLog: "MALWARE_SNDBX // ",
-};
 
 // Una sola richiesta a Sanity per pagina, condivisa da metadati e contenuto
 const getLog = cache((slug) => client.fetch(LOG_QUERY, { slug }));
@@ -51,7 +44,7 @@ export async function generateMetadata({ params }) {
   const log = await getLog(slug);
   if (!log) return {};
 
-  const prefix = PREFIX_TEXT[log._type] || "SYSTEM // ";
+  const prefix = getLogPrefix(log._type);
   return {
     title: `${prefix}${log.title}`,
     description: log.excerpt || undefined,
@@ -91,7 +84,7 @@ export default async function LogPage({ params }) {
     )
   );
 
-  const prefix = PREFIX_TEXT[log._type] || "SYSTEM // ";
+  const prefix = getLogPrefix(log._type);
   const fullTitle = `${prefix}${log.title}`;
   
   const technicalId = log._id ? log._id.substring(0, 8).toUpperCase() : "00000000";
@@ -117,27 +110,38 @@ export default async function LogPage({ params }) {
 
       <div className={styles.contentWrapper}>
         
-        {/* 3. DETAILS ROW CONDIZIONALE: Mostra i metadati in base al tipo di schema */}
-        <div className={styles.detailsRow}>
-          <span>{`ID: ${technicalId}`}</span>
-          <time dateTime={log.publishedAt || undefined}>{`DATE: ${date}`}</time>
-          
-          {log._type === 'forgeLog' && (
-            <span>{`ENV: ${log.language || 'UNKNOWN'} // ${log.version || 'v1.0.0'}`}</span>
-          )}
-          {log._type === 'breachLog' && (
-            <span>{`TARGET: ${log.platform || 'CTF'} // ${log.difficulty || 'MEDIUM'}`}</span>
-          )}
-          {log._type === 'malwareLog' && (
-            <span>{`ENV: ${log.sandboxEnv || 'SANDBOX'}`}</span>
-          )}
-          
-          <span>{`STATUS: ${log.status || "STABLE"}`}</span>
-        </div>
+        {/* SCHEDA TECNICA: campi comuni + campi della categoria */}
+        <SpecGrid
+          items={[
+            ['ID', technicalId],
+            ['DATE', date],
+            ...getReportSpecs(log),
+            ['STATUS', log.status || 'STABLE'],
+          ]}
+        />
+
+        <TagList tags={log.tags} />
+
+        {log._type === 'forgeLog' && <ProjectLinks repoUrl={log.repoUrl} demoUrl={log.demoUrl} />}
+
+        <KeyTakeaways text={log.keyTakeaways} />
+
+        {log._type === 'malwareLog' && (
+          <>
+            <LabObjective objective={log.objective} outcome={log.outcome} />
+            <LabTopology nodes={log.topology} />
+            <LabSafety isolation={log.isolation} mitre={log.mitre} />
+          </>
+        )}
 
         <article className={`prose prose-invert prose-cyan max-w-none ${styles.articleContainer}`}>
           <PortableText value={content} components={portableTextComponents} />
         </article>
+
+        {/* Appendice dell'analisi malware: campione e indicatori */}
+        {log._type === 'malwareLog' && log.experimentType === 'MALWARE_ANALYSIS' && (
+          <MalwareIndicators family={log.malwareFamily} fileHash={log.fileHash} iocs={log.iocs} />
+        )}
       </div>
     </section>
   );

@@ -1,20 +1,14 @@
 import styles from '@/app/(site)/logs/LogsPage.module.css';
+import { FILTER_CATEGORIES as CATEGORIES } from '@/lib/logTypes';
 
-// 1. Definiamo le nuove categorie reali allineate con Sanity e LogsClient
-const CATEGORIES = [
-  { id: "ALL", label: "ALL_SYSTEMS" },
-  { id: "FORGE", label: "FORGE_CRAFT" },
-  { id: "BREACH", label: "BREACH_REPORT" },
-  { id: "SANDBOX", label: "MALWARE_SNDBX" }
-];
-
+// Le categorie arrivano da src/lib/logTypes.js
 export default function FilterBar({ activeFilter, setActiveFilter, counts }) {
   return (
     <div className={styles.filterBar}>
       {CATEGORIES.map((cat) => (
         <button
           key={cat.id}
-          onClick={() => setActiveFilter(cat.id)} // Invia lo stato corretto (ALL, FORGE, BREACH, SANDBOX)
+          onClick={() => setActiveFilter(cat.id)} // ALL, CTF, CODE, LAB
           className={`${styles.filterButton} ${activeFilter === cat.id ? styles.filterActive : ""}`}
         >
           {/* Mostra il testo cyberpunk a schermo */}

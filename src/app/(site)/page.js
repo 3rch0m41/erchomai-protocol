@@ -5,13 +5,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import heroLogo from '@/assets/erchomai-hero.png';
 import { client } from '@/sanity/lib/client';
+import { getLogType, getLogPrefix, LOG_TYPES_GROQ } from '@/lib/logTypes';
 
 // Rigenera la pagina al massimo ogni 60 secondi, così i log pubblicati
 // nello Studio compaiono sul sito senza dover rifare il deploy.
 export const revalidate = 60;
 
 // QUERY AGGIORNATA: Recupera gli ultimi 4 log interrogando i tre nuovi schemi
-const GET_LATEST_LOGS = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] ] | order(publishedAt desc)[0...4] {
+const GET_LATEST_LOGS = `*[ _type in ${LOG_TYPES_GROQ} ] | order(publishedAt desc)[0...4] {
   _id,
   _type,
   title,
@@ -20,21 +21,6 @@ const GET_LATEST_LOGS = `*[ _type in ["forgeLog", "breachLog", "malwareLog"] ] |
   status
 }`;
 
-// Funzione di mappatura interna per associare lo schema alla categoria corretta
-const getLogType = (type) => {
-  if (type === "forgeLog") return "FORGE";
-  if (type === "breachLog") return "BREACH";
-  if (type === "malwareLog") return "SANDBOX";
-  return "SYSTEM";
-};
-
-// Prefissi testuali per i titoli
-const PREFIX_TEXT = {
-  FORGE: "FORGE_CRAFT // ",
-  BREACH: "BREACH_REPORT // ",
-  SANDBOX: "MALWARE_SNDBX // ",
-};
-
 export default async function HomePage() {
   // Recupero dati da Sanity
   const rawLogs = await client.fetch(GET_LATEST_LOGS);
@@ -42,7 +28,7 @@ export default async function HomePage() {
   // Normalizziamo i log prima di mandarli in rendering
   const latestLogs = rawLogs.map(log => {
     const calculatedType = getLogType(log._type);
-    const prefix = PREFIX_TEXT[calculatedType] || "SYSTEM // ";
+    const prefix = getLogPrefix(log._type);
     
     return {
       ...log,

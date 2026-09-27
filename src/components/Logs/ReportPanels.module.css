@@ -1,0 +1,282 @@
+/* Blocchi aggiuntivi dei report: stessi colori e font della pagina log */
+
+/* ---------- Scheda tecnica ---------- */
+.specGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px 24px;
+  margin: 0 0 18px;
+  padding: 16px 0;
+  border-bottom: 1px dotted rgba(0, 242, 254, 0.2);
+}
+
+.specItem dt {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(0, 242, 254, 0.45);
+  margin-bottom: 4px;
+}
+
+.specItem dd {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  text-transform: uppercase;
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Tag ---------- */
+.tagList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 22px;
+  padding: 0;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border: 1px solid rgba(0, 242, 254, 0.25);
+  border-radius: 999px;
+  background: rgba(0, 242, 254, 0.05);
+  color: rgba(0, 242, 254, 0.85);
+  text-decoration: none;
+}
+
+.tagLink:hover {
+  border-color: #00f2fe;
+  color: #ffffff;
+}
+
+/* ---------- Pannelli ---------- */
+.panel {
+  border: 1px solid rgba(0, 242, 254, 0.15);
+  background: rgba(0, 242, 254, 0.025);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin: 0 0 18px;
+}
+
+.panelSplit {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.panelSplit > .panel {
+  margin-bottom: 18px;
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.panelLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: #00f2fe;
+  margin-bottom: 10px;
+}
+
+.panelHeader .panelLabel {
+  margin-bottom: 0;
+}
+
+.panelText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+/* ---------- Key takeaways ---------- */
+.takeaways {
+  border-left: 3px solid #00f2fe;
+  background: linear-gradient(90deg, rgba(0, 242, 254, 0.09), rgba(0, 242, 254, 0.01));
+  padding: 14px 18px;
+  margin: 0 0 22px;
+  border-radius: 0 8px 8px 0;
+}
+
+.takeaways p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ---------- Link del progetto ---------- */
+.linkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 22px;
+}
+
+.linkButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  color: #000;
+  background: #00f2fe;
+  border: 1px solid #00f2fe;
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.linkButton:hover {
+  background: #ffffff;
+  border-color: #ffffff;
+}
+
+.linkButtonAlt {
+  color: #00f2fe;
+  background: transparent;
+}
+
+.linkButtonAlt:hover {
+  color: #000;
+}
+
+/* ---------- Esito dell'esperimento ---------- */
+.outcome {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.outcomeOk { color: #3ddc97; }
+.outcomeKo { color: #ff6b6b; }
+.outcomePartial { color: #ffc857; }
+
+/* ---------- Tabelle (topologia, IOC) ---------- */
+.tableScroll {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.table th {
+  text-align: left;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(0, 242, 254, 0.5);
+  font-weight: 700;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
+}
+
+.table td {
+  padding: 8px 10px;
+  color: rgba(255, 255, 255, 0.82);
+  border-bottom: 1px dashed rgba(0, 242, 254, 0.08);
+  vertical-align: top;
+}
+
+.hostCell {
+  color: #00f2fe !important;
+  font-weight: 700;
+}
+
+/* ---------- Isolamento ---------- */
+.checkList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12.5px;
+}
+
+.checkList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.4;
+}
+
+.checkList svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.checkOk { color: rgba(255, 255, 255, 0.82); }
+.checkOk svg { color: #3ddc97; }
+.checkKo { color: rgba(255, 255, 255, 0.45); }
+.checkKo svg { color: #ff6b6b; }
+
+/* ---------- Malware: campione e IOC ---------- */
+.iocPanel {
+  margin-top: 36px;
+  border-color: rgba(255, 107, 107, 0.25);
+  background: rgba(255, 107, 107, 0.03);
+}
+
+.iocPanel .panelLabel {
+  color: #ff8a8a;
+}
+
+.sampleInfo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 32px;
+  margin: 0 0 14px;
+}
+
+.sampleInfo dt {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 138, 138, 0.6);
+}
+
+.sampleInfo dd {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.hash {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  word-break: break-all;
+}
+
+.iocNote {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 767.98px) {
+  .panelSplit {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .specGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
