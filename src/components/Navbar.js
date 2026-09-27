@@ -24,7 +24,7 @@ export default function Navbar() {
       onKeyDown={(e) => { if (e.key === 'Escape') closeMenu(); }}
     >
       <div className="pl-5 lg:pl-20 flex-shrink-0">
-        <Link href="/" onClick={closeMenu} className="flex items-center gap-4 group cursor-pointer">
+        <Link href="/" onClick={closeMenu} className="flex items-center gap-4 group cursor-pointer no-underline">
           <span
             className={`text-3xl font-black italic nav-link-custom ${pathname === '/' ? 'active-page' : ''}`}
           >

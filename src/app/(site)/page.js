@@ -51,38 +51,43 @@ export default async function HomePage() {
   });
 
   return (
-    <div className="flex flex-col items-center w-full relative">
-      
+    // DESKTOP: la home riempie esattamente lo spazio tra Navbar e Footer.
+    // Il riquadro principale prende tutto lo spazio che resta sopra gli articoli;
+    // se lo schermo è troppo basso non si schiaccia oltre il minimo e la pagina scorre.
+    // MOBILE: riquadro e articoli uno sotto l'altro, con scroll normale.
+    <div className="relative w-full flex flex-col flex-[1_0_auto]">
+
       {/* Background HUD Grid */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none -z-10" />
-      
-      <main className="w-full box-border flex flex-col items-center relative z-10 px-4 md:px-6 pb-16 md:pb-24">
-        
+
+      {/* Contenitore: tutta la larghezza fino a 1700px, margini allineati alla Navbar */}
+      <div className="relative z-10 flex-1 flex flex-col w-full max-w-[1700px] mx-auto box-border px-4 md:px-8 lg:px-20 pt-4 lg:pt-5 pb-8 lg:pb-6">
+
         {/* HERO ZONE */}
-        <div className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%] min-h-[380px] md:min-h-[460px] mt-8 md:mt-16 rounded-[32px] md:rounded-[40px] border border-white/10 bg-white/[0.01] backdrop-blur-md relative flex flex-col items-center justify-center px-6 py-14 md:p-12 shadow-[0_0_80px_rgba(0,0,0,0.8)]">
+        <div className="relative flex-1 min-h-[380px] md:min-h-[260px] w-full box-border rounded-[32px] md:rounded-[40px] border border-white/10 bg-white/[0.01] bg-[radial-gradient(ellipse_at_center,rgba(0,242,254,0.05),transparent_65%)] backdrop-blur-md flex flex-col items-center justify-center px-6 py-10 md:py-6 overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)]">
           <div className="absolute top-6 left-6 md:top-8 md:left-10 flex items-center gap-2 text-[#00f2fe]/30 text-[8px] tracking-[0.5em] font-bold uppercase">
             <Zap className="w-3.5 h-3.5 animate-pulse" />
             <span>ERCHOMAI_PROTOCOL_v4.1</span>
           </div>
-          
-          <div className="w-24 h-24 md:w-32 md:h-32 border border-[#00f2fe]/20 rounded-[32px] flex items-center justify-center bg-black/40 mb-10 overflow-hidden relative">
+
+          {/* Le dimensioni seguono l'altezza dello schermo (vh), entro un minimo e un massimo */}
+          <div className="w-[clamp(84px,14vh,140px)] h-[clamp(84px,14vh,140px)] border border-[#00f2fe]/20 rounded-[clamp(22px,3.5vh,34px)] flex items-center justify-center bg-black/40 mb-[clamp(20px,4vh,44px)] overflow-hidden relative flex-shrink-0">
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#00f2fe]/15 to-transparent h-1/2 w-full animate-[scan_4s_linear_infinite]" />
-            <span className="text-5xl md:text-6xl font-black italic">ΣΠ</span>
+            <span className="text-[clamp(2.4rem,6.5vh,4.25rem)] font-black italic">ΣΠ</span>
           </div>
 
-          {/* Titolo principale della home (my-[0.83em] mantiene i margini che aveva come h2) */}
-          <h1 className="text-lg md:text-xl lg:text-2xl font-extralight tracking-[0.12em] text-center uppercase leading-tight my-[0.83em]">
+          <h1 className="m-0 text-[clamp(1rem,2.4vh,1.6rem)] font-extralight tracking-[0.12em] text-center uppercase leading-tight">
             Security is not a <span className="text-white/10 italic">destination</span>;<br />
-            <span className="font-bold text-white tracking-[0.2em] text-2xl md:text-4xl mt-4 block leading-none">
+            <span className="font-bold text-white tracking-[0.2em] text-[clamp(1.6rem,4.8vh,3.4rem)] mt-[clamp(8px,1.8vh,20px)] block leading-none">
               It is a state of arrival.
             </span>
           </h1>
         </div>
 
         {/* SECTION HEADER */}
-        <div className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%] mt-14 md:mt-28 mb-8 md:mb-10">
+        <div className="w-full mt-8 lg:mt-5 mb-4">
           <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-3 px-2">
-            <h2 className="text-3xl md:text-5xl font-black text-[#00f2fe] uppercase italic leading-none m-0">
+            <h2 className="text-3xl lg:text-4xl font-black text-[#00f2fe] uppercase italic leading-none m-0">
               [SYSTEM_LOG]
             </h2>
             <Link href="/logs" className="group flex items-center gap-2 mb-1 no-underline">
@@ -92,31 +97,31 @@ export default async function HomePage() {
               <ChevronRight className="w-4 h-4 text-white/10 group-hover:text-[#00f2fe] group-hover:translate-x-1 transition-all" />
             </Link>
           </div>
-          <div className="h-[1px] w-full bg-white/10 mt-4" />
+          <div className="h-[1px] w-full bg-white/10 mt-3" />
         </div>
 
-        {/* BLOG CARDS ZONE */}
-        <section className="w-full box-border max-w-full md:max-w-[50%] lg:max-w-[42%]">
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-stretch">
-            {latestLogs.length > 0 ? (
-              latestLogs.map((log) => (
-                <div key={log._id} className="flex-1 min-w-0">
-                  <BlogCard 
-                    title={log.displayTitle} // Usa il titolo formattato con il prefisso pulito
-                    excerpt={log.excerpt} 
+        {/* BLOG CARDS ZONE: 1 colonna su telefono, 2 su tablet, 4 in riga su desktop */}
+        <section className="w-full flex-shrink-0">
+          {latestLogs.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+              {latestLogs.map((log) => (
+                <div key={log._id} className="min-w-0 lg:h-[clamp(120px,16vh,165px)]">
+                  <BlogCard
+                    title={log.displayTitle} // Titolo già completo di prefisso
+                    excerpt={log.excerpt}
                     slug={log.slug}
-                    type={log.type} // Passiamo l'identificativo nel caso servisse a BlogCard
+                    type={log.type}
                   />
                 </div>
-              ))
-            ) : (
-              <p className="text-[#00f2fe]/30 text-[10px] uppercase tracking-widest w-full text-center py-10">
-                No logs found in terminal...
-              </p>
-            )}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-[#00f2fe]/30 text-[10px] uppercase tracking-widest w-full text-center py-10">
+              No logs found in terminal...
+            </p>
+          )}
         </section>
-      </main>
+      </div>
 
       {/* Stile CSS Global gestito per Server Components */}
       <style dangerouslySetInnerHTML={{ __html: `

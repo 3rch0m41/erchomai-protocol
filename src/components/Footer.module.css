@@ -90,8 +90,8 @@
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(66, 203, 209, 0.2), transparent);
 }
-/* MOBILE: le tre sezioni vanno una sotto l'altra, centrate */
-@media (max-width: 767.98px) {
+/* MOBILE E TABLET (sotto i 1024px, come la Navbar): sezioni una sotto l'altra, centrate */
+@media (max-width: 1023.98px) {
   .footer {
     padding: 1.5rem 0 1rem;
   }
