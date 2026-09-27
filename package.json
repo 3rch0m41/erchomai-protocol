@@ -13,6 +13,8 @@
     "@sanity/code-input": "^7.1.0",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^6.16.0",
+    "archiver-zip-encrypted": "^2.0.0",
+    "archiver7": "npm:archiver@^7.0.1",
     "lucide-react": "^1.7.0",
     "next": "^16.2.4",
     "next-sanity": "^13.3.4",

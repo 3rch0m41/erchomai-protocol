@@ -81,6 +81,38 @@ export function baseFields({ titleTitle, titleDesc, extraMeta = [], statusList, 
       group: 'meta',
     },
     {
+      name: 'downloads',
+      title: 'File scaricabili',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            { name: 'file', title: 'File', type: 'file' },
+            {
+              name: 'label',
+              title: 'Nome mostrato',
+              type: 'string',
+              description: 'Opzionale. Se vuoto, viene usato il nome originale del file.',
+            },
+            {
+              name: 'description',
+              title: 'Descrizione',
+              type: 'string',
+              description: 'Es: "Regola YARA per la famiglia X" o "Script di enumerazione".',
+            },
+          ],
+          preview: {
+            select: { title: 'label', fname: 'file.asset.originalFilename', subtitle: 'description' },
+            prepare: ({ title, fname, subtitle }) => ({ title: title || fname || '(file)', subtitle }),
+          },
+        },
+      ],
+      description:
+        'Allegati offerti in download. Gli eseguibili (.exe, .dll, ecc.) vengono serviti solo dentro uno zip protetto da password ("infected").',
+      group: 'report',
+    },
+    {
       name: 'keyTakeaways',
       title: 'Key takeaways',
       type: 'text',

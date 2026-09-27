@@ -1,6 +1,6 @@
 // Blocchi aggiuntivi della pagina di un report, diversi per ogni categoria.
 // Ogni blocco compare solo se il campo corrispondente è compilato nello Studio.
-import { ExternalLink, GitBranch, CheckCircle2, XCircle, CircleDot } from 'lucide-react';
+import { ExternalLink, GitBranch, CheckCircle2, XCircle, CircleDot, Download, FileArchive, ShieldAlert } from 'lucide-react';
 import styles from './ReportPanels.module.css';
 
 // Mostra solo link http(s): evita che un valore errato diventi un link "javascript:"
@@ -237,6 +237,48 @@ export function MalwareIndicators({ family, fileHash, iocs }) {
       <p className={styles.iocNote}>
         Indicatori resi non cliccabili (&quot;defanged&quot;): hxxp:// e [.] al posto di http:// e punto.
       </p>
+    </section>
+  );
+}
+
+// ---------- DOWNLOADS ----------
+
+export function Downloads({ files }) {
+  if (!files?.length) return null;
+  const hasZipped = files.some((f) => f.zipped);
+  return (
+    <section className={styles.panel}>
+      <div className={styles.panelLabel}>DOWNLOADS</div>
+      <ul className={styles.downloadList}>
+        {files.map((f) => (
+          <li key={f.sha256} className={styles.downloadItem}>
+            <div className={styles.downloadMain}>
+              <span className={styles.downloadName}>
+                {f.zipped ? <FileArchive size={14} /> : <Download size={14} />} {f.label}
+              </span>
+              {f.description && <span className={styles.downloadDesc}>{f.description}</span>}
+              <span className={styles.downloadMeta}>
+                {f.size}
+                {f.zipped && ' · ZIP protetto'}
+              </span>
+              <code className={styles.downloadHash} title="SHA-256 del file originale">
+                SHA-256: {f.sha256}
+              </code>
+            </div>
+            {/* download={...} fa sì che il browser salvi il file invece di aprirlo */}
+            <a href={f.href} download={f.filename} className={styles.downloadButton}>
+              <Download size={14} /> GET
+            </a>
+          </li>
+        ))}
+      </ul>
+      {hasZipped && (
+        <p className={styles.downloadWarn}>
+          <ShieldAlert size={13} className="inline mr-1" />
+          Gli eseguibili sono in uno ZIP protetto da password (&quot;infected&quot;). Aprili solo in un
+          ambiente isolato.
+        </p>
+      )}
     </section>
   );
 }

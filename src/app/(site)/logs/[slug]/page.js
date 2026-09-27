@@ -3,6 +3,7 @@ import { cache } from 'react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { highlightCode } from '@/lib/highlight';
+import { resolveDownloads } from '@/lib/downloads';
 import { SITE_NAME } from '@/lib/site';
 import { getLogPrefix, LOG_TYPES_GROQ } from '@/lib/logTypes';
 import {
@@ -15,6 +16,7 @@ import {
   LabTopology,
   LabSafety,
   MalwareIndicators,
+  Downloads,
 } from '@/components/Logs/ReportPanels';
 import { PortableText } from '@portabletext/react';
 import Link from 'next/link';
@@ -32,6 +34,10 @@ const LOG_QUERY = `*[ _type in ${LOG_TYPES_GROQ} && slug.current == $slug ][0] {
   "content": content[] {
     ...,
     _type == "image" => { "dimensions": asset->metadata.dimensions }
+  },
+  downloads[] {
+    label, description,
+    file { asset-> { url, originalFilename, size, mimeType } }
   }
 }`;
 
@@ -83,6 +89,9 @@ export default async function LogPage({ params }) {
         : block
     )
   );
+
+  // Scarica ogni allegato, calcola SHA-256 e cifra gli eseguibili (lato server)
+  const downloads = await resolveDownloads(log.downloads);
 
   const prefix = getLogPrefix(log._type);
   const fullTitle = `${prefix}${log.title}`;
@@ -137,6 +146,8 @@ export default async function LogPage({ params }) {
         <article className={`prose prose-invert prose-cyan max-w-none ${styles.articleContainer}`}>
           <PortableText value={content} components={portableTextComponents} />
         </article>
+
+        <Downloads files={downloads} />
 
         {/* Appendice dell'analisi malware: campione e indicatori */}
         {log._type === 'malwareLog' && log.experimentType === 'MALWARE_ANALYSIS' && (

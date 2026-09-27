@@ -53,6 +53,10 @@ const commonHeaders = [
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Questi pacchetti girano solo lato server (Node) e non vanno inclusi nel bundle:
+  // servono a impacchettare gli allegati eseguibili in uno zip protetto.
+  serverExternalPackages: ['archiver7', 'archiver-zip-encrypted'],
+
   async headers() {
     // Se più regole impostano lo stesso header, vince l'ultima:
     // le regole dello Studio stanno dopo e sovrascrivono la CSP del sito.
