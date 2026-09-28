@@ -7,7 +7,7 @@ import styles from './privacy.module.css'; // Manteniamo il CSS della privacy
 // DATI DA COMPILARE: modifica qui, il resto della pagina li usa
 // ============================================================
 const OWNER_NAME = 'Giulio Malini';
-const CONTACT_EMAIL = 'postmaster@erchomaiprotocol.it'; // <-- inserisci l'email pubblica di contatto
+const CONTACT_EMAIL = 'EMAIL_DA_INSERIRE@esempio.com'; // <-- inserisci l'email pubblica di contatto
 const EFFECTIVE_DATE = '27 settembre 2026';
 
 export const metadata = {
